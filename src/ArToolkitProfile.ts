@@ -1,6 +1,6 @@
 import { IContextParameters, IDefaultMarkerParameters, ISourceParameters } from './CommonInterfaces/THREEx-interfaces'
 import { ArToolkitContext } from './ArToolkitContext'
-import { Z_FIXED } from 'zlib';
+import { Utils } from './new-api/Utils'
 
 //namespace THREEx {
 export class ArToolkitProfile {
@@ -15,10 +15,7 @@ export class ArToolkitProfile {
     }
 
     reset() {
-        this.sourceParameters = {
-            // to read from the webcam
-            sourceType: 'webcam',
-        }
+        this.sourceParameters.sourceType = 'webcam'
 
         this.contextParameters.cameraParametersUrl = ArToolkitContext.baseURL + '../data/data/camera_para.dat';
         this.contextParameters.detectionMode = 'mono';
@@ -105,11 +102,8 @@ export class ArToolkitProfile {
 
     trackingMethod(trackingMethod: string) {
         /// to be fixed Utils not yet implemented...
-        //var data = ARjs.Utils.parseTrackingMethod(trackingMethod)
-        var data = {
-            markersAreaEnabled: '',
-            trackingBackend: ''
-        }
+        var data = Utils.parseTrackingMethod(trackingMethod)
+
         this.defaultMarkerParameters.markersAreaEnabled = data.markersAreaEnabled
         this.contextParameters.trackingBackend = data.trackingBackend
         return this

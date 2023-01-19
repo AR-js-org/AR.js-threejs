@@ -14,9 +14,14 @@ export interface IDefaultMarkerParameters {
     type: string;
     patternUrl: string;
     changeMatrixMode: string;
-    markersAreaEnabled: string;
+    markersAreaEnabled: boolean;
 }
 export interface ISourceParameters {
     sourceType: string;
-    sourceUrl?: string;
+    sourceUrl: string;
+    deviceId: string;
+    sourceWidth: number;
+    sourceHeight: number;
+    displayWidth: number;
+    displayHeight: number;
 }
