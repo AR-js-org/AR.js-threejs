@@ -36,6 +36,9 @@ module.exports = (env, argv) => {
                 threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols.js')
               }
             },*/
+            resolve: {
+                extensions: [".tsx", ".ts", ".js"],
+            },
             module,
             externals: {
                 three: {
