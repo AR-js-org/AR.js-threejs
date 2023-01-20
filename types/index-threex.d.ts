@@ -1,3 +1,4 @@
 import { ArToolkitContext } from "./ArToolkitContext";
 import { ArToolkitProfile } from "./ArToolkitProfile";
-export { ArToolkitContext, ArToolkitProfile, };
+import { ArToolkitSource } from "./ArToolkitSource";
+export { ArToolkitContext, ArToolkitProfile, ArToolkitSource };

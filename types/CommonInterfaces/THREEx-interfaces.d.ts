@@ -25,3 +25,22 @@ export interface ISourceParameters {
     displayWidth: number;
     displayHeight: number;
 }
+export interface IUserMediaConstraints {
+    audio: boolean;
+    video: {
+        width: {
+            min?: number;
+            max?: number;
+            ideal: number;
+        };
+        height: {
+            min?: number;
+            max?: number;
+            ideal: number;
+        };
+        facingMode: string;
+        deviceId: {
+            exact: string;
+        };
+    };
+}

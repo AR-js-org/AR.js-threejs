@@ -75,15 +75,17 @@ export class ArToolkitContext {
                 continue
             }
             // to be fixed...
-            //var currentValue = this.parameters[key]
-            var currentValue;
+            //@ts-ignore
+            var currentValue = this.parameters[key]
+            //var currentValue;
 
             if (currentValue === undefined) {
                 console.warn("THREEx.ArToolkitContext: '" + key + "' is not a property of this material.")
                 continue
             }
-             // to be fixed...
-            //this.parameters[key] = newValue
+            // to be fixed...
+            //@ts-ignore
+            this.parameters[key] = newValue
         }
     }
 }
