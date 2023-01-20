@@ -33,6 +33,7 @@
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {
+    "@ar-js-org/artoolkit5-js": "https://github.com/AR-js-org/artoolkit5-js#03e42e67beb23fc4e47ea4124600c4ff45997fce",
     "three": "^0.148.0"
   }
 }

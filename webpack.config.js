@@ -30,14 +30,12 @@ module.exports = (env, argv) => {
                 libraryTarget: 'umd',
                 globalObject: 'this'
             },
-            /*resolve: {
+            resolve: {
               alias: {
                 jsartoolkit: '@ar-js-org/artoolkit5-js',
-                threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols.js')
-              }
-            },*/
-            resolve: {
-                extensions: [".tsx", ".ts", ".js"],
+                //threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols.js')
+              },
+              extensions: [".tsx", ".ts", ".js"],
             },
             module,
             externals: {
