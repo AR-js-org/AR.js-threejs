@@ -14,7 +14,17 @@ module.exports = (env, argv) => {
                 loader: 'ts-loader',
             }]
 
-        }]
+        },
+        {
+            test: /\.worker\.(c|m)?ts$/i,
+            use: {
+              loader: 'worker-loader',
+              options: {
+                inline: 'no-fallback'
+              }
+            }
+          }
+    ]
     };
 
     return [

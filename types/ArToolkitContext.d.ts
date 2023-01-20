@@ -18,6 +18,8 @@ export declare class ArToolkitContext {
     createDefaultCamera(trackingBackend: string): THREE.Camera;
     init(onCompleted: any): void;
     update(srcElement: any): boolean;
+    addMarker(arMarkerControls: any): void;
+    removeMarker(arMarkerControls: any): void;
     private _initArtoolkit;
     getProjectionMatrix(): THREE.Matrix4;
     _updateArtoolkit(srcElement: any): void;

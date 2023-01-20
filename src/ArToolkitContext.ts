@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { IContextParameters } from './CommonInterfaces/THREEx-interfaces';
-//import ArMarkerControls from "./arjs-markercontrols";
+import { ArMarkerControls } from "./ArMarkerControls";
 import jsartoolkit from "@ar-js-org/artoolkit5-js"; // TODO comment explanation
 const { ARController } = jsartoolkit;
 
@@ -160,6 +160,24 @@ export class ArToolkitContext {
         // return true as we processed the frame
         return true;
     };
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //          Add/Remove markerControls
+    ////////////////////////////////////////////////////////////////////////////////
+    addMarker(arMarkerControls: any) {
+        console.assert(arMarkerControls instanceof ArMarkerControls);
+        this._arMarkersControls.push(arMarkerControls);
+    };
+
+    removeMarker(arMarkerControls: any) {
+        console.assert(arMarkerControls instanceof ArMarkerControls);
+        var index = this._arMarkersControls.indexOf(arMarkerControls);
+        if (index < 0) {
+            return;
+        }
+        this._arMarkersControls.splice(index, 1);
+    };
+
 
     private _initArtoolkit(onCompleted: any) {
         var _this = this;
