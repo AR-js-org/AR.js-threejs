@@ -1,9 +1,9 @@
-import { IContextParameters, IDefaultMarkerParameters, ISourceParameters } from './CommonInterfaces/THREEx-interfaces'
+import { IArToolkitProfile, IContextParameters, IDefaultMarkerParameters, ISourceParameters } from './CommonInterfaces/THREEx-interfaces'
 import { ArToolkitContext } from './ArToolkitContext'
 import { Utils } from './new-api/Utils'
 
 //namespace THREEx {
-export class ArToolkitProfile {
+export class ArToolkitProfile implements IArToolkitProfile {
     sourceParameters: ISourceParameters;
     contextParameters: IContextParameters;
     defaultMarkerParameters: IDefaultMarkerParameters;
