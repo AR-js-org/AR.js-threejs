@@ -1,9 +1,14 @@
 import { EventDispatcher, Object3D} from "three";
+import { IArBaseControls } from "./CommonInterfaces/THREEx-interfaces";
 
-export class ArBaseControls extends EventDispatcher {
+export class ArBaseControls extends EventDispatcher implements IArBaseControls {
     static id: number;
     private _id;
     protected object3d: Object3D;
+    /**
+     * THe ArBaseControls constructor, you need to pass a Theee.js Object3d to it.
+     * @param object3d the Threejs Object3D to pass.
+     */
     constructor(object3d: Object3D) {
         super()
         this._id = ArBaseControls.id++;
@@ -13,11 +18,19 @@ export class ArBaseControls extends EventDispatcher {
         this.object3d.visible = false;
     }
 
-    update() {
+    /**
+     * a virtual update method to implement in the derived class.
+     * @return {void}
+     */
+    update(): void {
         console.assert(false, "you need to implement your own update");
     };
 
-    name() {
+    /**
+     * a virtual name method to implement in the derived class.
+     * @return {string}
+     */
+    name(): string {
         console.assert(false, "you need to implement your own .name()");
         return "Not yet implemented - name()";
     };
