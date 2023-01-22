@@ -1,3 +1,8 @@
+export interface IArBaseControls {
+    update(): void;
+    name(): string;
+}
+
 export interface IContextParameters {
     canvasWidth: number,
     canvasHeight: number,
