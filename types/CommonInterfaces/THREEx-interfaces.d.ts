@@ -2,6 +2,21 @@ export interface IArBaseControls {
     update(): void;
     name(): string;
 }
+export interface IArToolkitProfile {
+    sourceParameters: ISourceParameters;
+    contextParameters: IContextParameters;
+    defaultMarkerParameters: IDefaultMarkerParameters;
+    reset(): void;
+    performance(label: string): void;
+    defaultMarker(trackingBackend: string): void;
+    sourceWebcam(): this;
+    sourceVideo(url: string): this;
+    sourceImage(url: string): this;
+    trackingBackend(trackingBackend: string): void;
+    changeMatrixMode(changeMatrixMode: string): void;
+    trackingMethod(trackingMethod: string): void;
+    checkIfValid(): void;
+}
 export interface IContextParameters {
     canvasWidth: number;
     canvasHeight: number;
