@@ -3,7 +3,6 @@ import { IContextParameters } from './CommonInterfaces/THREEx-interfaces';
 import jsartoolkit from "@ar-js-org/artoolkit5-js";
 declare const ARController: typeof jsartoolkit.ARController;
 export declare class ArToolkitContext {
-    static baseURL: string;
     private _updatedAt;
     parameters: IContextParameters;
     arController: typeof ARController;
@@ -15,6 +14,8 @@ export declare class ArToolkitContext {
     addEventListener: <T extends any>(type: T, listener: THREE.EventListener<any, T, THREE.EventDispatcher<any>>) => void;
     hasEventListener: <T extends any>(type: T, listener: THREE.EventListener<any, T, THREE.EventDispatcher<any>>) => boolean;
     removeEventListener: <T extends any>(type: T, listener: THREE.EventListener<any, T, THREE.EventDispatcher<any>>) => void;
+    static baseURL: string;
+    static REVISION: string;
     createDefaultCamera(trackingBackend: string): THREE.Camera;
     init(onCompleted: any): void;
     update(srcElement: any): boolean;

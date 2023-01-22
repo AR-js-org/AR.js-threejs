@@ -6,7 +6,6 @@ const { ARController } = jsartoolkit;
 
 //namespace THREEx {
 export class ArToolkitContext {
-    static baseURL: string;
     private _updatedAt: any;
     public parameters: IContextParameters;
     public arController: typeof ARController;
@@ -39,14 +38,31 @@ export class ArToolkitContext {
             // the patternRatio inside the artoolkit marker - artoolkit only
             patternRatio: 0.5,
 
+            // Labeling mode for markers - ['black_region', 'white_region']
+            // black_region: Black bordered markers on a white background, white_region: White bordered markers on a black background
+            labelingMode: "black_region",
+
             // enable image smoothing or not for canvas copy - default to true
             // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/imageSmoothingEnabled
             imageSmoothingEnabled: false,
         }
         // parameters sanity check
-        console.assert(['artoolkit'].indexOf(String(this.parameters.trackingBackend)) !== -1, 'invalid parameter trackingBackend', this.parameters.trackingBackend)
-        console.assert(['color', 'color_and_matrix', 'mono', 'mono_and_matrix'].indexOf(this.parameters.detectionMode) !== -1, 'invalid parameter detectionMode', this.parameters.detectionMode)
-
+        console.assert(
+            ['artoolkit'].indexOf(String(this.parameters.trackingBackend)) !== 
+            -1, 
+            'invalid parameter trackingBackend', 
+            this.parameters.trackingBackend)
+        console.assert(
+            ['color', 'color_and_matrix', 'mono', 'mono_and_matrix'].indexOf(this.parameters.detectionMode) !== 
+            -1, 
+            'invalid parameter detectionMode', 
+            this.parameters.detectionMode)
+        console.assert(
+            ["black_region", "white_region"].indexOf(this.parameters.labelingMode) !==
+            -1,
+            "invalid parameter labelingMode",
+            this.parameters.labelingMode
+        );
         this.arController = null;
 
         this.initialized = false
@@ -65,6 +81,9 @@ export class ArToolkitContext {
     addEventListener = THREE.EventDispatcher.prototype.addEventListener;
     hasEventListener = THREE.EventDispatcher.prototype.hasEventListener;
     removeEventListener = THREE.EventDispatcher.prototype.removeEventListener;
+
+    static baseURL = "https://ar-js-org.github.io/AR.js/three.js/";
+    static REVISION = "3.4.3";
 
     createDefaultCamera(trackingBackend: string) {
         console.assert(false, 'use ARjs.Utils.createDefaultCamera instead')

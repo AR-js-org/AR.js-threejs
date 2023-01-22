@@ -7,6 +7,7 @@ export interface IContextParameters {
     maxDetectionRate: number;
     matrixCodeType: string;
     patternRatio: number;
+    labelingMode: string;
     trackingBackend: string;
     imageSmoothingEnabled: boolean;
 }

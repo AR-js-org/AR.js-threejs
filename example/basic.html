@@ -13,6 +13,8 @@
 		Contact me any time at <a href='https://twitter.com/nicolocarp' target='_blank'>@nicolocarp</a>
 	</div>
 	<script>
+		THREEx.ArToolkitContext.baseURL= "./"
+		console.log(THREEx.ArToolkitContext.REVISION);
 		//////////////////////////////////////////////////////////////////////////////////
 		//		Init
 		//////////////////////////////////////////////////////////////////////////////////
@@ -99,7 +101,7 @@
 
 		function initARContext() { // create atToolkitContext
 			arToolkitContext = new THREEx.ArToolkitContext({
-				cameraParametersUrl: THREEx.ArToolkitContext.baseURL + './example/data/camera_para.dat',
+				cameraParametersUrl: THREEx.ArToolkitContext.baseURL + './data/camera_para.dat',
 				detectionMode: 'mono'
 			})
 			// initialize it
@@ -116,7 +118,7 @@
 			// MARKER
 			arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
 				type: 'pattern',
-				patternUrl: THREEx.ArToolkitContext.baseURL + './example/data/patt.hiro',
+				patternUrl: THREEx.ArToolkitContext.baseURL + './data/patt.hiro',
 				// patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji',
 				// as we controls the camera, set changeMatrixMode: 'cameraTransformMatrix'
 				changeMatrixMode: 'cameraTransformMatrix'
@@ -148,6 +150,10 @@
 				return 'portrait';
 			}
 		}
+
+		window.addEventListener("markerFound", function(e){
+			console.log("marker found!", e);
+		})
 
 		// update artoolkit on every frame
 		onRenderFcts.push(function () {

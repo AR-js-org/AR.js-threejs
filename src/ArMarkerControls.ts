@@ -299,6 +299,8 @@ export class ArMarkerControls extends ArBaseControls {
 
             // listen to the event
             arController.addEventListener("getMarker", function (event: { data: { type: any; marker: { idPatt: any; idMatrix: any; }; }; }) {
+                //console.log(event);
+                
                 if (
                     event.data.type === ARToolkit.PATTERN_MARKER &&
                     _this.parameters.type === "pattern"
