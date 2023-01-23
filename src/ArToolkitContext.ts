@@ -8,7 +8,7 @@ const { ARController } = jsartoolkit;
 export class ArToolkitContext implements IArToolkitContext {
     private _updatedAt: any;
     public parameters: IContextParameters;
-    public arController: typeof ARController;
+    public arController: any;
     private initialized: boolean;
     private _arMarkersControls: any;
     public _artoolkitProjectionAxisTransformMatrix: any;
@@ -199,7 +199,6 @@ export class ArToolkitContext implements IArToolkitContext {
         this._arMarkersControls.splice(index, 1);
     };
 
-
     private _initArtoolkit(onCompleted: any) {
         var _this = this;
 
@@ -213,13 +212,13 @@ export class ArToolkitContext implements IArToolkitContext {
         );
 
         // init controller
-        //@ts-ignore
+
         ARController.initWithDimensions(
             _this.parameters.canvasWidth,
             _this.parameters.canvasHeight,
-            _this.parameters.cameraParametersUrl
+            _this.parameters.cameraParametersUrl,
+            {}
         )
-            //@ts-ignore
             .then((arController: any) => {
                 _this.arController = arController;
 
@@ -311,8 +310,7 @@ export class ArToolkitContext implements IArToolkitContext {
             "arController MUST be initialized to call this function"
         );
 
-        // get projectionMatrixArr from artoolkit
-        //@ts-ignore
+        // get projectionMatrixArr from artoolkit       
         var projectionMatrixArr = this.arController.getCameraMatrix();
         var projectionMatrix = new THREE.Matrix4().fromArray(projectionMatrixArr);
 
@@ -322,7 +320,6 @@ export class ArToolkitContext implements IArToolkitContext {
     };
 
     private _updateArtoolkit(srcElement: HTMLImageElement | HTMLVideoElement) {
-        //@ts-ignore
         this.arController.process(srcElement);
     };
 }
