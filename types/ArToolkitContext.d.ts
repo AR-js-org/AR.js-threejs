@@ -1,8 +1,9 @@
 import * as THREE from 'three';
-import { IContextParameters } from './CommonInterfaces/THREEx-interfaces';
+import { IArToolkitContext, IContextParameters } from './CommonInterfaces/THREEx-interfaces';
+import { ArMarkerControls } from "./ArMarkerControls";
 import jsartoolkit from "@ar-js-org/artoolkit5-js";
 declare const ARController: typeof jsartoolkit.ARController;
-export declare class ArToolkitContext {
+export declare class ArToolkitContext implements IArToolkitContext {
     private _updatedAt;
     parameters: IContextParameters;
     arController: typeof ARController;
@@ -17,13 +18,13 @@ export declare class ArToolkitContext {
     static baseURL: string;
     static REVISION: string;
     createDefaultCamera(trackingBackend: string): THREE.Camera;
-    init(onCompleted: any): void;
-    update(srcElement: any): boolean;
-    addMarker(arMarkerControls: any): void;
-    removeMarker(arMarkerControls: any): void;
+    init(onCompleted: Function): void;
+    update(srcElement: HTMLImageElement | HTMLVideoElement): boolean;
+    addMarker(arMarkerControls: ArMarkerControls): void;
+    removeMarker(arMarkerControls: ArMarkerControls): void;
     private _initArtoolkit;
     getProjectionMatrix(): THREE.Matrix4;
-    _updateArtoolkit(srcElement: any): void;
+    private _updateArtoolkit;
     private setParameters;
 }
 export {};

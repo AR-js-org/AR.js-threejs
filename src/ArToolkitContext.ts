@@ -1,11 +1,11 @@
 import * as THREE from 'three'
-import { IContextParameters } from './CommonInterfaces/THREEx-interfaces';
+import { IArToolkitContext, IContextParameters } from './CommonInterfaces/THREEx-interfaces';
 import { ArMarkerControls } from "./ArMarkerControls";
 import jsartoolkit from "@ar-js-org/artoolkit5-js"; // TODO comment explanation
 const { ARController } = jsartoolkit;
 
 //namespace THREEx {
-export class ArToolkitContext {
+export class ArToolkitContext implements IArToolkitContext{
     private _updatedAt: any;
     public parameters: IContextParameters;
     public arController: typeof ARController;
@@ -95,7 +95,7 @@ export class ArToolkitContext {
         return camera
     }
 
-    init(onCompleted: any) {
+    init(onCompleted: Function) {
         var _this = this;
         if (this.parameters.trackingBackend === "artoolkit") {
             this._initArtoolkit(done);
@@ -114,7 +114,7 @@ export class ArToolkitContext {
         }
     };
 
-    update(srcElement: any) {
+    update(srcElement: HTMLImageElement | HTMLVideoElement) {
         // be sure arController is fully initialized
         if (
             this.parameters.trackingBackend === "artoolkit" &&
@@ -183,12 +183,12 @@ export class ArToolkitContext {
     ////////////////////////////////////////////////////////////////////////////////
     //          Add/Remove markerControls
     ////////////////////////////////////////////////////////////////////////////////
-    addMarker(arMarkerControls: any) {
+    addMarker(arMarkerControls: ArMarkerControls) {
         console.assert(arMarkerControls instanceof ArMarkerControls);
         this._arMarkersControls.push(arMarkerControls);
     };
 
-    removeMarker(arMarkerControls: any) {
+    removeMarker(arMarkerControls: ArMarkerControls) {
         console.assert(arMarkerControls instanceof ArMarkerControls);
         var index = this._arMarkersControls.indexOf(arMarkerControls);
         if (index < 0) {
@@ -319,7 +319,7 @@ export class ArToolkitContext {
         return projectionMatrix;
     };
 
-    _updateArtoolkit(srcElement: any) {
+    private _updateArtoolkit(srcElement: HTMLImageElement | HTMLVideoElement) {
         //@ts-ignore
         this.arController.process(srcElement);
     };
