@@ -4,7 +4,7 @@
 <script src='js/three.min.js'></script>
 <!-- ar.js -->
 <script src="../dist/ar-threex.js"></script>
-<script>THREEx.ArToolkitContext.baseURL = '../'</script>
+<!--<script>THREEx.ArToolkitContext.baseURL = '../'</script>-->
 
 <body style='font-family: Monospace;'>
 	<div style='position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;'>
@@ -13,8 +13,10 @@
 		Contact me any time at <a href='https://twitter.com/nicolocarp' target='_blank'>@nicolocarp</a>
 	</div>
 	<script>
-		THREEx.ArToolkitContext.baseURL= "./"
-		console.log(THREEx.ArToolkitContext.REVISION);
+		THREEx.ArToolkitContext.baseURL= "./";
+		// log in the console the two newly created namespaces
+		console.log(THREEx);
+		console.log(ARjs)
 		//////////////////////////////////////////////////////////////////////////////////
 		//		Init
 		//////////////////////////////////////////////////////////////////////////////////
@@ -71,7 +73,7 @@
 					'canplay',
 					'actual source dimensions',
 					arToolkitSource.domElement.videoWidth,
-					arToolkitSource.domElement.videoHeight
+					arToolkitSource.domElement.videoHeight,
 				);
 
 				initARContext();
@@ -85,6 +87,7 @@
 		// handle resize
 		window.addEventListener('resize', function () {
 			onResize()
+			console.log(THREEx);
 		})
 
 		function onResize() {
@@ -97,7 +100,6 @@
 		////////////////////////////////////////////////////////////////////////////////
 		//          initialize arToolkitContext
 		////////////////////////////////////////////////////////////////////////////////
-
 
 		function initARContext() { // create atToolkitContext
 			arToolkitContext = new THREEx.ArToolkitContext({
