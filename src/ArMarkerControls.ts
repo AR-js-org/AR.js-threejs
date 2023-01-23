@@ -1,8 +1,9 @@
 import { ArBaseControls } from "./ArBaseControls";
 import { Matrix4, Object3D } from "three";
 import Worker  from "worker-loader?inline=no-fallback!./Worker";
-import jsartoolkit from "@ar-js-org/artoolkit5-js";
+import { setParameters } from "./common-functions/utilityFunctions";
 import { IArMarkerControls, IArMarkerControlsParameters, IArToolkitContext } from "./CommonInterfaces/THREEx-interfaces";
+import jsartoolkit from "@ar-js-org/artoolkit5-js";
 const { ARToolkit } = jsartoolkit;
 
 /**
@@ -15,6 +16,7 @@ export class ArMarkerControls extends ArBaseControls implements IArMarkerControl
     private parameters: IArMarkerControlsParameters;
     private smoothMatrices: any[];
     private onGetMarker: Function;
+    private className: string;
 
     /**
      * ArMarkerControls constructor, needs context, object3d and a bunch of parameters.
@@ -26,9 +28,7 @@ export class ArMarkerControls extends ArBaseControls implements IArMarkerControl
     constructor(context: IArToolkitContext, object3d: Object3D, parameters: IArMarkerControlsParameters) {
         super(object3d)
         var _this = this;
-
-        //ArBaseControls.call(this, object3d);
-
+        this.className = "ArMarkerControls";
         this.context = context;
         // handle default parameters
         this.parameters = {
@@ -78,30 +78,7 @@ export class ArMarkerControls extends ArBaseControls implements IArMarkerControl
         //////////////////////////////////////////////////////////////////////////////
         //		setParameters
         //////////////////////////////////////////////////////////////////////////////
-        setParameters(parameters);
-        function setParameters(parameters: any) {
-            if (parameters === undefined) return;
-            for (var key in parameters) {
-                var newValue = parameters[key];
-
-                if (newValue === undefined) {
-                    console.warn("ArMarkerControls: '" + key + "' parameter is undefined.");
-                    continue;
-                }
-                //@ts-ignore
-                var currentValue = _this.parameters[key];
-
-                if (currentValue === undefined) {
-                    console.warn(
-                        "ArMarkerControls: '" + key + "' is not a property of this material."
-                    );
-                    continue;
-                }
-                //@ts-ignore
-                _this.parameters[key] = newValue;
-            }
-        }
-
+        setParameters(parameters, this);
         if (this.parameters.smooth) {
             this.smoothMatrices = []; // last DEBOUNCE_COUNT modelViewMatrix
         }
