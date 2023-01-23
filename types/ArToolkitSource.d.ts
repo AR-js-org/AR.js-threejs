@@ -4,6 +4,7 @@ export declare class ArToolkitSource implements IArToolkitSource {
     ready: boolean;
     domElement: HTMLImageElement | HTMLVideoElement;
     parameters: ISourceParameters;
+    private className;
     constructor(parameters: ISourceParameters);
     init(onReady: Function, onError: Function): this;
     domElementWidth(): number;
@@ -16,5 +17,4 @@ export declare class ArToolkitSource implements IArToolkitSource {
     private _initSourceImage;
     private _initSourceVideo;
     private _initSourceWebcam;
-    private setParameters;
 }

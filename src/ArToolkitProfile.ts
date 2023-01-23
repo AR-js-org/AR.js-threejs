@@ -2,7 +2,6 @@ import { IArToolkitProfile, IContextParameters, IDefaultMarkerParameters, ISourc
 import { ArToolkitContext } from './ArToolkitContext'
 import { Utils } from './new-api/Utils'
 
-//namespace THREEx {
 /**
  * ArToolkitProfile set the basic parameters to init the ARjs app:
  * sourceParameters, contextParameters and defaultMarkerParameters.
@@ -187,4 +186,3 @@ export class ArToolkitProfile implements IArToolkitProfile {
         return 'desktop-normal'
     }
 }
-//}

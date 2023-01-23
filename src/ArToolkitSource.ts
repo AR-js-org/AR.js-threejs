@@ -1,4 +1,5 @@
 import { IArToolkitSource, IArToolkitContext, ISourceParameters, IUserMediaConstraints } from "./CommonInterfaces/THREEx-interfaces";
+import { setParameters } from "./common-functions/utilityFunctions";
 import { Renderer, Camera } from 'three'
 
 /**
@@ -9,6 +10,7 @@ export class ArToolkitSource implements IArToolkitSource {
   public ready: boolean;
   public domElement: HTMLImageElement | HTMLVideoElement;
   public parameters: ISourceParameters;
+  private className: string;
 
   /**
    * The ArToolkitSource constructor. Create a new instance of the class with all the parameters.
@@ -16,6 +18,7 @@ export class ArToolkitSource implements IArToolkitSource {
    * @param {ISourceParameters} parameters 
    */
   constructor(parameters: ISourceParameters) {
+    this.className = "ArToolkitSource";
     this.ready = false;
     this.domElement = null;
 
@@ -39,8 +42,7 @@ export class ArToolkitSource implements IArToolkitSource {
     //////////////////////////////////////////////////////////////////////////////
     //		setParameters
     //////////////////////////////////////////////////////////////////////////////
-    this.setParameters(parameters);
-
+    setParameters(parameters, this);
   }
 
   /**
@@ -395,31 +397,4 @@ export class ArToolkitSource implements IArToolkitSource {
 
     return domElement;
   };
-
-  private setParameters(parameters: any) {
-    if (parameters === undefined) return;
-    for (var key in parameters) {
-      var newValue = parameters[key];
-
-      if (newValue === undefined) {
-        console.log(newValue);
-
-        console.warn("ArToolkitSource: '" + key + "' parameter is undefined.");
-        continue;
-      }
-
-      //@ts-ignore
-      var currentValue = this.parameters[key];
-
-      if (currentValue === undefined) {
-        console.log(newValue);
-        console.warn(
-          "ArToolkitSource: '" + key + "' is not a property of this material."
-        );
-        continue;
-      }
-      //@ts-ignore
-      this.parameters[key] = newValue;
-    }
-  }
 }

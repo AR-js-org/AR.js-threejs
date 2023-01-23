@@ -1,19 +1,21 @@
 import * as THREE from 'three'
 import { IArToolkitContext, IContextParameters } from './CommonInterfaces/THREEx-interfaces';
 import { ArMarkerControls } from "./ArMarkerControls";
+import { setParameters } from './common-functions/utilityFunctions';
 import jsartoolkit from "@ar-js-org/artoolkit5-js"; // TODO comment explanation
 const { ARController } = jsartoolkit;
 
-//namespace THREEx {
-export class ArToolkitContext implements IArToolkitContext{
+export class ArToolkitContext implements IArToolkitContext {
     private _updatedAt: any;
     public parameters: IContextParameters;
     public arController: typeof ARController;
     private initialized: boolean;
     private _arMarkersControls: any;
     public _artoolkitProjectionAxisTransformMatrix: any;
+    private className: string;
     constructor(parameters: any) {
-        this._updatedAt = null
+        this.className = "ArToolkitContext";
+        this._updatedAt = null;
 
         // handle default parameters
         this.parameters = {
@@ -48,14 +50,14 @@ export class ArToolkitContext implements IArToolkitContext{
         }
         // parameters sanity check
         console.assert(
-            ['artoolkit'].indexOf(String(this.parameters.trackingBackend)) !== 
-            -1, 
-            'invalid parameter trackingBackend', 
+            ['artoolkit'].indexOf(String(this.parameters.trackingBackend)) !==
+            -1,
+            'invalid parameter trackingBackend',
             this.parameters.trackingBackend)
         console.assert(
-            ['color', 'color_and_matrix', 'mono', 'mono_and_matrix'].indexOf(this.parameters.detectionMode) !== 
-            -1, 
-            'invalid parameter detectionMode', 
+            ['color', 'color_and_matrix', 'mono', 'mono_and_matrix'].indexOf(this.parameters.detectionMode) !==
+            -1,
+            'invalid parameter detectionMode',
             this.parameters.detectionMode)
         console.assert(
             ["black_region", "white_region"].indexOf(this.parameters.labelingMode) !==
@@ -74,7 +76,7 @@ export class ArToolkitContext implements IArToolkitContext{
         //////////////////////////////////////////////////////////////////////////////
         //		setParameters
         //////////////////////////////////////////////////////////////////////////////
-        this.setParameters(parameters)
+        setParameters(parameters, this)
     }
 
     dispatchEvent = THREE.EventDispatcher.prototype.dispatchEvent;
@@ -323,29 +325,4 @@ export class ArToolkitContext implements IArToolkitContext{
         //@ts-ignore
         this.arController.process(srcElement);
     };
-
-    private setParameters(parameters: any) {
-        if (parameters === undefined) return
-        for (var key in parameters) {
-            var newValue = parameters[key]
-
-            if (newValue === undefined) {
-                console.warn("THREEx.ArToolkitContext: '" + key + "' parameter is undefined.")
-                continue
-            }
-            // to be fixed...
-            //@ts-ignore
-            var currentValue = this.parameters[key]
-            //var currentValue;
-
-            if (currentValue === undefined) {
-                console.warn("THREEx.ArToolkitContext: '" + key + "' is not a property of this material.")
-                continue
-            }
-            // to be fixed...
-            //@ts-ignore
-            this.parameters[key] = newValue
-        }
-    }
 }
-//}
