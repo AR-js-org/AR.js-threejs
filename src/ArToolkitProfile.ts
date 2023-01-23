@@ -3,18 +3,32 @@ import { ArToolkitContext } from './ArToolkitContext'
 import { Utils } from './new-api/Utils'
 
 //namespace THREEx {
+/**
+ * ArToolkitProfile set the basic parameters to init the ARjs app:
+ * sourceParameters, contextParameters and defaultMarkerParameters.
+ * @class ArToolkitProfile
+ */
 export class ArToolkitProfile implements IArToolkitProfile {
     sourceParameters: ISourceParameters;
     contextParameters: IContextParameters;
     defaultMarkerParameters: IDefaultMarkerParameters;
 
+    /**
+     * The default ArToolkitProfile constructor. It reset to default parameters.
+     * See the reset and performace function.
+     * @constructor
+     */
     constructor() {
         this.reset()
 
         this.performance('default')
     }
 
-    reset() {
+    /**
+     * Used internally by the class when an new instance is created. It reset to default parameters. 
+     * @returns {this} this
+     */
+    reset(): this {
         this.sourceParameters.sourceType = 'webcam'
 
         this.contextParameters.cameraParametersUrl = ArToolkitContext.baseURL + '../data/data/camera_para.dat';
@@ -27,7 +41,12 @@ export class ArToolkitProfile implements IArToolkitProfile {
         return this
     };
 
-    performance(label: string) {
+    /**
+     * Set canvasWidth and canvasHeight contextParameters based on the type of device.
+     * @param {string} label 
+     * @returns {this} this
+     */
+    performance(label: string): this {
 
         if (label === 'default') {
             label = this._guessPerformanceLabel()
@@ -59,7 +78,13 @@ export class ArToolkitProfile implements IArToolkitProfile {
         return this
     }
 
-    defaultMarker(trackingBackend: string) {
+    /**
+     * Set defaults marker parameters using artoolkit as backend. 
+     * It set detectionMode (mono), the type of marker (pattern) and the url of the pattern.
+     * @param trackingBackend 
+     * @returns this
+     */
+    defaultMarker(trackingBackend: string): this {
         this.trackingBackend(trackingBackend || this.contextParameters.trackingBackend);
 
         if (trackingBackend === 'artoolkit') {
@@ -71,37 +96,68 @@ export class ArToolkitProfile implements IArToolkitProfile {
         return this
     }
 
-    sourceWebcam() {
+    /**
+     * Set the source parameter type to webcam.
+     * @returns this
+     */
+    sourceWebcam(): this {
         this.sourceParameters.sourceType = 'webcam'
         delete this.sourceParameters.sourceUrl
         return this
     }
 
-    sourceVideo(url: string) {
+    /**
+     * Set the source parameter type to video. 
+     * You must provide a valid video url.
+     * @param {string} url 
+     * @returns this
+     */
+    sourceVideo(url: string): this {
         this.sourceParameters.sourceType = 'video'
         this.sourceParameters.sourceUrl = url
         return this
     }
 
-    sourceImage(url: string) {
+    /**
+     * Set the source parameter type to Image. 
+     * You must provide a valid Image url.
+     * @param {string} url 
+     * @returns this
+     */
+    sourceImage(url: string): this {
         this.sourceParameters.sourceType = 'image'
         this.sourceParameters.sourceUrl = url
         return this
     }
 
-    trackingBackend(trackingBackend: string) {
+    /**
+     * Set the context tracking backend parameter.
+     * This is an obsolete function use trackingMethod() instead.
+     * @param {string} trackingBackend 
+     * @returns 
+     */
+    trackingBackend(trackingBackend: string): this {
         console.warn('stop profile.trackingBackend() obsolete function. use .trackingMethod instead')
         this.contextParameters.trackingBackend = trackingBackend
         return this
     }
 
-    changeMatrixMode(changeMatrixMode: string) {
+    /**
+     * This change the changeMatrixMode parameter: It can be modelViewMatrix or cameraTransformMatrix.
+     * @param {string} changeMatrixMode 
+     * @returns this
+     */
+    changeMatrixMode(changeMatrixMode: string): this {
         this.defaultMarkerParameters.changeMatrixMode = changeMatrixMode
         return this
     }
 
-    trackingMethod(trackingMethod: string) {
-        /// to be fixed Utils not yet implemented...
+    /**
+     * Set the trackingBackend and the makersAreaEnabled params.
+     * @param {string} trackingMethod 
+     * @returns 
+     */
+    trackingMethod(trackingMethod: string): this {
         var data = Utils.parseTrackingMethod(trackingMethod)
 
         this.defaultMarkerParameters.markersAreaEnabled = data.markersAreaEnabled
@@ -112,7 +168,7 @@ export class ArToolkitProfile implements IArToolkitProfile {
     /**
      * check if the profile is valid. Throw an exception is not valid
      */
-    checkIfValid() {
+    checkIfValid(): this {
         return this
     }
 
