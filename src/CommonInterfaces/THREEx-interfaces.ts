@@ -1,6 +1,22 @@
+import { Renderer, Camera, Matrix4 } from "three";
 export interface IArBaseControls {
     update(): void;
     name(): string;
+}
+
+export interface IArToolkitContext{
+    parameters: IContextParameters;
+    arController: any;
+    dispatchEvent(event: any): void;
+    addEventListener<T extends any>(type: T, listener: THREE.EventListener<any, T, THREE.EventDispatcher<any>>): void;
+    hasEventListener<T extends any>(type: T, listener: THREE.EventListener<any, T, THREE.EventDispatcher<any>>): boolean;
+    removeEventListener<T extends any>(type: T, listener: THREE.EventListener<any, T, THREE.EventDispatcher<any>>): void;
+    createDefaultCamera(trackingBackend: string): void;
+    init(onCompleted: Function): void;
+    update(srcElement: HTMLImageElement | HTMLVideoElement): void;
+    addMarker(arMarkerControls: any): void;
+    removeMarker(arMarkerControls: any): void
+    getProjectionMatrix(): Matrix4;
 }
 
 export interface IArToolkitProfile {
@@ -17,6 +33,19 @@ export interface IArToolkitProfile {
     changeMatrixMode(changeMatrixMode: string): void;
     trackingMethod(trackingMethod: string): void;
     checkIfValid(): void;
+}
+
+export interface IArToolkitSource {
+    ready: boolean;
+    domElement: HTMLImageElement | HTMLVideoElement;
+    parameters: ISourceParameters;
+    init(onReady: Function, onError: Function): this;
+    domElementWidth(): number;
+    domElementHeight(): number;
+    onResizeElement(): void;
+    copyElementSizeTo(otherElement: any): void;
+    copySizeTo(): void;
+    onResize(arToolkitContext: IArToolkitContext, renderer: Renderer, camera: Camera): void;
 }
 
 export interface IContextParameters {
