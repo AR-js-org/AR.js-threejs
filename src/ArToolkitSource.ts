@@ -1,11 +1,21 @@
-import { ISourceParameters, IUserMediaConstraints } from "./CommonInterfaces/THREEx-interfaces";
+import { IArToolkitSource, IArToolkitContext, ISourceParameters, IUserMediaConstraints } from "./CommonInterfaces/THREEx-interfaces";
+import { Renderer, Camera } from 'three'
 
-
-export class ArToolkitSource {
-  ready: boolean;
-  domElement: HTMLImageElement | HTMLVideoElement;
+/**
+ * ArToolkitSource
+ * @class ArToolkitSource
+ */
+export class ArToolkitSource implements IArToolkitSource {
+  public ready: boolean;
+  public domElement: HTMLImageElement | HTMLVideoElement;
   public parameters: ISourceParameters;
-  constructor(parameters: any) {
+
+  /**
+   * The ArToolkitSource constructor. Create a new instance of the class with all the parameters.
+   * @constructor
+   * @param {ISourceParameters} parameters 
+   */
+  constructor(parameters: ISourceParameters) {
     this.ready = false;
     this.domElement = null;
 
@@ -33,13 +43,15 @@ export class ArToolkitSource {
 
   }
 
-  private onInitialClick() {
-    if (this.domElement && this.domElement instanceof HTMLVideoElement) {
-      this.domElement.play().then(() => { });
-    }
-  };
-
-  init(onReady: any, onError: any) {
+  /**
+   * The most useful function in the ArToolkitSource class.
+   * It initialize all the necessary to grab the source data and the domElement used internally.
+   * You must provide a onReady and a onError function as a callback.
+   * @param onReady 
+   * @param onError 
+   * @returns this
+   */
+  init(onReady: Function, onError: Function): this {
     var _this = this;
     var domElement: HTMLImageElement | HTMLVideoElement;
 
@@ -80,6 +92,158 @@ export class ArToolkitSource {
       _this.ready = true;
 
       onReady && onReady();
+    }
+  };
+
+  /**
+   * domElementWidth return the style.width of the queried domElement.
+   * @returns {number} width of the domElement
+   */
+  domElementWidth(): number {
+    return parseInt(this.domElement.style.width);
+  };
+
+  /**
+   * domElementHeigth return the style.height of the queried domElement.
+   * @returns {number} height of the domElement
+   */
+  domElementHeight(): number {
+    return parseInt(this.domElement.style.height);
+  };
+
+  /**
+   * onResizeElement resize the domElement when source change.
+   * You need to call copyElementSizeTo after it.
+   */
+  onResizeElement(): void {
+    var screenWidth = window.innerWidth;
+    var screenHeight = window.innerHeight;
+
+    // sanity check
+    console.assert(arguments.length === 0);
+
+    // compute sourceWidth, sourceHeight
+    if (this.domElement.nodeName === "IMG" && this.domElement instanceof HTMLImageElement) {
+      var sourceWidth: number = this.domElement.naturalWidth;
+      var sourceHeight = this.domElement.naturalHeight;
+    } else if (this.domElement.nodeName === "VIDEO" && this.domElement instanceof HTMLVideoElement) {
+      var sourceWidth = this.domElement.videoWidth;
+      var sourceHeight = this.domElement.videoHeight;
+    } else {
+      console.assert(false);
+    }
+
+    // compute sourceAspect
+    var sourceAspect = sourceWidth / sourceHeight;
+    // compute screenAspect
+    var screenAspect = screenWidth / screenHeight;
+
+    // if screenAspect < sourceAspect, then change the width, else change the height
+    if (screenAspect < sourceAspect) {
+      // compute newWidth and set .width/.marginLeft
+      var newWidth = sourceAspect * screenHeight;
+      this.domElement.style.width = newWidth + "px";
+      this.domElement.style.marginLeft = -(newWidth - screenWidth) / 2 + "px";
+
+      // init style.height/.marginTop to normal value
+      this.domElement.style.height = screenHeight + "px";
+      this.domElement.style.marginTop = "0px";
+    } else {
+      // compute newHeight and set .height/.marginTop
+      var newHeight = 1 / (sourceAspect / screenWidth);
+      this.domElement.style.height = newHeight + "px";
+      this.domElement.style.marginTop = -(newHeight - screenHeight) / 2 + "px";
+
+      // init style.width/.marginLeft to normal value
+      this.domElement.style.width = screenWidth + "px";
+      this.domElement.style.marginLeft = "0px";
+    }
+  };
+  /*
+  Source.prototype.copyElementSizeTo = function(otherElement){
+    otherElement.style.width = this.domElement.style.width
+    otherElement.style.height = this.domElement.style.height
+    otherElement.style.marginLeft = this.domElement.style.marginLeft
+    otherElement.style.marginTop = this.domElement.style.marginTop
+  }
+  */
+
+  /**
+   * copyElementSizeTo let make a copy of the style settings of the domElement.
+   * It copy width, height, marginLeft and marginTop.
+   * @param {any} otherElement  
+   */
+  copyElementSizeTo(otherElement: any): void {
+    if (window.innerWidth > window.innerHeight) {
+      //landscape
+      otherElement.style.width = this.domElement.style.width;
+      otherElement.style.height = this.domElement.style.height;
+      otherElement.style.marginLeft = this.domElement.style.marginLeft;
+      otherElement.style.marginTop = this.domElement.style.marginTop;
+    } else {
+      //portrait
+      otherElement.style.height = this.domElement.style.height;
+      otherElement.style.width =
+        (parseInt(otherElement.style.height) * 4) / 3 + "px";
+      otherElement.style.marginLeft =
+        (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px";
+      otherElement.style.marginTop = 0;
+    }
+  };
+
+  /**
+   * Depreacted function use copyELementSizeTo instead.
+   */
+  copySizeTo() {
+    console.warn(
+      "obsolete function arToolkitSource.copySizeTo. Use arToolkitSource.copyElementSizeTo"
+    );
+    //@ts-ignore
+    this.copyElementSizeTo.apply(this, arguments);
+  };
+
+  /**
+   * Depreacted function use onResizeElement instead.
+   */
+  onResize(arToolkitContext: IArToolkitContext, renderer: Renderer, camera: Camera) {
+    if (arguments.length !== 3) {
+      console.warn(
+        "obsolete function arToolkitSource.onResize. Use arToolkitSource.onResizeElement"
+      );
+      //@ts-ignore
+      return this.onResizeElement.apply(this, arguments);
+    }
+
+    var trackingBackend = arToolkitContext.parameters.trackingBackend;
+
+    // RESIZE DOMELEMENT
+    if (trackingBackend === "artoolkit") {
+      this.onResizeElement();
+
+      var isAframe = renderer.domElement.dataset.aframeCanvas ? true : false;
+      if (isAframe === false) {
+        this.copyElementSizeTo(renderer.domElement);
+      } else {
+      }
+
+      if (arToolkitContext.arController !== null) {
+        this.copyElementSizeTo(arToolkitContext.arController.canvas);
+      }
+    } else console.assert(false, "unhandled trackingBackend " + trackingBackend);
+
+    // UPDATE CAMERA
+    if (trackingBackend === "artoolkit") {
+      if (arToolkitContext.arController !== null) {
+        camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
+      }
+    } else console.assert(false, "unhandled trackingBackend " + trackingBackend);
+  };
+
+  // private methods used internally by the class.
+
+  private onInitialClick() {
+    if (this.domElement && this.domElement instanceof HTMLVideoElement) {
+      this.domElement.play().then(() => { });
     }
   };
 
@@ -258,133 +422,4 @@ export class ArToolkitSource {
       this.parameters[key] = newValue;
     }
   }
-
-  domElementWidth() {
-    return parseInt(this.domElement.style.width);
-  };
-  
-  domElementHeight() {
-    return parseInt(this.domElement.style.height);
-  };
-
-  onResizeElement () {
-    var _this = this;
-    var screenWidth = window.innerWidth;
-    var screenHeight = window.innerHeight;
-  
-    // sanity check
-    console.assert(arguments.length === 0);
-  
-    // compute sourceWidth, sourceHeight
-    if (this.domElement.nodeName === "IMG" && this.domElement instanceof HTMLImageElement) {
-      var sourceWidth: number = this.domElement.naturalWidth;
-      var sourceHeight = this.domElement.naturalHeight;
-    } else if (this.domElement.nodeName === "VIDEO" && this.domElement instanceof HTMLVideoElement) {
-      var sourceWidth = this.domElement.videoWidth;
-      var sourceHeight = this.domElement.videoHeight;
-    } else {
-      console.assert(false);
-    }
-  
-    // compute sourceAspect
-    var sourceAspect = sourceWidth / sourceHeight;
-    // compute screenAspect
-    var screenAspect = screenWidth / screenHeight;
-  
-    // if screenAspect < sourceAspect, then change the width, else change the height
-    if (screenAspect < sourceAspect) {
-      // compute newWidth and set .width/.marginLeft
-      var newWidth = sourceAspect * screenHeight;
-      this.domElement.style.width = newWidth + "px";
-      this.domElement.style.marginLeft = -(newWidth - screenWidth) / 2 + "px";
-  
-      // init style.height/.marginTop to normal value
-      this.domElement.style.height = screenHeight + "px";
-      this.domElement.style.marginTop = "0px";
-    } else {
-      // compute newHeight and set .height/.marginTop
-      var newHeight = 1 / (sourceAspect / screenWidth);
-      this.domElement.style.height = newHeight + "px";
-      this.domElement.style.marginTop = -(newHeight - screenHeight) / 2 + "px";
-  
-      // init style.width/.marginLeft to normal value
-      this.domElement.style.width = screenWidth + "px";
-      this.domElement.style.marginLeft = "0px";
-    }
-  };
-  /*
-  Source.prototype.copyElementSizeTo = function(otherElement){
-    otherElement.style.width = this.domElement.style.width
-    otherElement.style.height = this.domElement.style.height
-    otherElement.style.marginLeft = this.domElement.style.marginLeft
-    otherElement.style.marginTop = this.domElement.style.marginTop
-  }
-  */
-
-  copyElementSizeTo (otherElement: any) {
-    if (window.innerWidth > window.innerHeight) {
-      //landscape
-      otherElement.style.width = this.domElement.style.width;
-      otherElement.style.height = this.domElement.style.height;
-      otherElement.style.marginLeft = this.domElement.style.marginLeft;
-      otherElement.style.marginTop = this.domElement.style.marginTop;
-    } else {
-      //portrait
-      otherElement.style.height = this.domElement.style.height;
-      otherElement.style.width =
-        (parseInt(otherElement.style.height) * 4) / 3 + "px";
-      otherElement.style.marginLeft =
-        (window.innerWidth - parseInt(otherElement.style.width)) / 2 + "px";
-      otherElement.style.marginTop = 0;
-    }
-  };
-
-  copySizeTo () {
-    console.warn(
-      "obsolete function arToolkitSource.copySizeTo. Use arToolkitSource.copyElementSizeTo"
-    );
-    //@ts-ignore
-    this.copyElementSizeTo.apply(this, arguments);
-  };
-  
-  //////////////////////////////////////////////////////////////////////////////
-  //		Code Separator
-  //////////////////////////////////////////////////////////////////////////////
-  
-  onResize (arToolkitContext: any, renderer: any, camera: any) {
-    if (arguments.length !== 3) {
-      console.warn(
-        "obsolete function arToolkitSource.onResize. Use arToolkitSource.onResizeElement"
-      );
-      //@ts-ignore
-      return this.onResizeElement.apply(this, arguments);
-    }
-  
-    var trackingBackend = arToolkitContext.parameters.trackingBackend;
-  
-    // RESIZE DOMELEMENT
-    if (trackingBackend === "artoolkit") {
-      this.onResizeElement();
-  
-      var isAframe = renderer.domElement.dataset.aframeCanvas ? true : false;
-      if (isAframe === false) {
-        this.copyElementSizeTo(renderer.domElement);
-      } else {
-      }
-  
-      if (arToolkitContext.arController !== null) {
-        this.copyElementSizeTo(arToolkitContext.arController.canvas);
-      }
-    } else console.assert(false, "unhandled trackingBackend " + trackingBackend);
-  
-    // UPDATE CAMERA
-    if (trackingBackend === "artoolkit") {
-      if (arToolkitContext.arController !== null) {
-        camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
-      }
-    } else console.assert(false, "unhandled trackingBackend " + trackingBackend);
-  };
-  
-  
-
 }
