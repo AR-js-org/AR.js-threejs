@@ -1,7 +1,9 @@
 /* eslint-env worker */
 import jsartoolkit from "@ar-js-org/artoolkit5-js";
-const { ARController } = jsartoolkit;
+import type ARController from "@ar-js-org/artoolkit5-js/types/ARController";
 const ctx: Worker = self as any;
+
+let ar: ARController | null = null
 
 ctx.onmessage = function (e) {
   var msg = e.data;
@@ -19,8 +21,6 @@ ctx.onmessage = function (e) {
 };
 
 var next: any = null;
-
-var ar: any//;
 var markerResult = null;
 
 function load(msg: any) {
@@ -36,7 +36,7 @@ function load(msg: any) {
   } else if (reC == false) {
     camUrl = basePath + "/" + msg.param;
   }
-  var onLoad = function (arController: any) {
+  var onLoad = function (arController:  ARController) {
     ar = arController;
     var cameraMatrix = ar.getCameraMatrix();
 
@@ -51,7 +51,7 @@ function load(msg: any) {
     }
     ar.loadNFTMarker(nftMarkerUrl)
       .then(function (markerId: any) {
-        ar.trackNFTMarkerId(markerId);
+        ar.trackNFTMarkerId(markerId, 80);
         let marker = ar.getNFTData(ar.id, 0);
         console.log("nftMarker data: ", marker);
         postMessage({ type: "markerInfos", marker: JSON.stringify(marker) });
@@ -76,9 +76,8 @@ function load(msg: any) {
   var onError = function (error: any) {
     console.error("Error while intizalizing arController", error);
   };
-//@ts-ignore
-  ARController.initWithDimensions(msg.pw, msg.ph, camUrl)
-  //@ts-ignore
+
+  jsartoolkit.ARController.initWithDimensions(msg.pw, msg.ph, camUrl, {})
     .then(onLoad)
     .catch(onError);
 }
