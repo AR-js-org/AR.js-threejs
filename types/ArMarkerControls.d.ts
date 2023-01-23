@@ -6,6 +6,7 @@ export declare class ArMarkerControls extends ArBaseControls implements IArMarke
     private parameters;
     private smoothMatrices;
     private onGetMarker;
+    private className;
     constructor(context: IArToolkitContext, object3d: Object3D, parameters: IArMarkerControlsParameters);
     dispose(): void;
     updateWithModelViewMatrix(modelViewMatrix: Matrix4): boolean;
