@@ -3,9 +3,15 @@ export interface IArBaseControls {
     update(): void;
     name(): string;
 }
+export interface IArMarkerControls {
+    dispose(): void;
+    updateWithModelViewMatrix(modelViewMatrix: Matrix4): boolean;
+    name(): string;
+}
 export interface IArToolkitContext {
     parameters: IContextParameters;
     arController: any;
+    _artoolkitProjectionAxisTransformMatrix: Matrix4;
     dispatchEvent(event: any): void;
     addEventListener<T extends any>(type: T, listener: THREE.EventListener<any, T, THREE.EventDispatcher<any>>): void;
     hasEventListener<T extends any>(type: T, listener: THREE.EventListener<any, T, THREE.EventDispatcher<any>>): boolean;
@@ -43,6 +49,19 @@ export interface IArToolkitSource {
     copyElementSizeTo(otherElement: any): void;
     copySizeTo(): void;
     onResize(arToolkitContext: IArToolkitContext, renderer: Renderer, camera: Camera): void;
+}
+export interface IArMarkerControlsParameters {
+    size: number;
+    type: string;
+    patternUrl: string;
+    barcodeValue: number;
+    descriptorsUrl: string;
+    changeMatrixMode: string;
+    minConfidence: number;
+    smooth: boolean;
+    smoothCount: number;
+    smoothTolerance: number;
+    smoothThreshold: number;
 }
 export interface IContextParameters {
     canvasWidth: number;
