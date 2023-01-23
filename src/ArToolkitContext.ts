@@ -11,7 +11,7 @@ export class ArToolkitContext implements IArToolkitContext{
     public arController: typeof ARController;
     private initialized: boolean;
     private _arMarkersControls: any;
-    private _artoolkitProjectionAxisTransformMatrix: any;
+    public _artoolkitProjectionAxisTransformMatrix: any;
     constructor(parameters: any) {
         this._updatedAt = null
 

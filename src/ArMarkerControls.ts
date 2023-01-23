@@ -2,15 +2,28 @@ import { ArBaseControls } from "./ArBaseControls";
 import { Matrix4, Object3D } from "three";
 import Worker  from "worker-loader?inline=no-fallback!./Worker";
 import jsartoolkit from "@ar-js-org/artoolkit5-js";
+import { IArMarkerControls, IArMarkerControlsParameters, IArToolkitContext } from "./CommonInterfaces/THREEx-interfaces";
 const { ARToolkit } = jsartoolkit;
 
-
-export class ArMarkerControls extends ArBaseControls {
-    private context: any;
-    private parameters: any;
+/**
+ * ArMarkerControls class. This is the class where you can set up the marker
+ * and attach it to a Three.js Object3D
+ * @class ArMarkerControls
+ */
+export class ArMarkerControls extends ArBaseControls implements IArMarkerControls {
+    private context: IArToolkitContext;
+    private parameters: IArMarkerControlsParameters;
     private smoothMatrices: any[];
-    private onGetMarker: any;
-    constructor(context: any, object3d: Object3D, parameters: any) {
+    private onGetMarker: Function;
+
+    /**
+     * ArMarkerControls constructor, needs context, object3d and a bunch of parameters.
+     * @constructor
+     * @param {IArToolkitContext} context 
+     * @param {Object3D} object3d 
+     * @param {IArMarkerControlsParameters} parameters 
+     */
+    constructor(context: IArToolkitContext, object3d: Object3D, parameters: IArMarkerControlsParameters) {
         super(object3d)
         var _this = this;
 
@@ -75,7 +88,7 @@ export class ArMarkerControls extends ArBaseControls {
                     console.warn("ArMarkerControls: '" + key + "' parameter is undefined.");
                     continue;
                 }
-
+                //@ts-ignore
                 var currentValue = _this.parameters[key];
 
                 if (currentValue === undefined) {
@@ -84,7 +97,7 @@ export class ArMarkerControls extends ArBaseControls {
                     );
                     continue;
                 }
-
+                //@ts-ignore
                 _this.parameters[key] = newValue;
             }
         }
@@ -105,7 +118,11 @@ export class ArMarkerControls extends ArBaseControls {
         } else console.assert(false);
     };
 
-    dispose() {
+    /**
+     * dispose is used to dispose the marker and all objects associated.
+     * @returns {void} void
+     */
+    dispose(): void {
         if (this.context && this.context.arController) {
             this.context.arController.removeEventListener(
                 "getMarker",
@@ -126,8 +143,10 @@ export class ArMarkerControls extends ArBaseControls {
     /**
      * When you actually got a new modelViewMatrix, you need to perfom a whole bunch
      * of things. it is done here.
+     * @param {Matrix4} modelViewMatrix
+     * @returns {boolean} renderReqd
      */
-    updateWithModelViewMatrix(modelViewMatrix: any) {
+    updateWithModelViewMatrix(modelViewMatrix: Matrix4) {
         var markerObject3D = this.object3d;
 
         // mark object as visible
@@ -224,7 +243,11 @@ export class ArMarkerControls extends ArBaseControls {
     //		utility functions
     //////////////////////////////////////////////////////////////////////////////
 
-    name() {
+    /**
+     * Method to get the name of the marker.
+     * @returns {string}
+     */
+    name(): string {
         var name = "";
         name += this.parameters.type;
 
@@ -248,7 +271,7 @@ export class ArMarkerControls extends ArBaseControls {
     //////////////////////////////////////////////////////////////////////////////
     //		init for Artoolkit
     //////////////////////////////////////////////////////////////////////////////
-    _initArtoolkit() {
+    private _initArtoolkit() {
         var _this = this;
 
         var artoolkitMarkerId: any = null;

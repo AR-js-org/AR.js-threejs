@@ -9,7 +9,7 @@ export declare class ArToolkitContext implements IArToolkitContext {
     arController: typeof ARController;
     private initialized;
     private _arMarkersControls;
-    private _artoolkitProjectionAxisTransformMatrix;
+    _artoolkitProjectionAxisTransformMatrix: any;
     constructor(parameters: any);
     dispatchEvent: (event: any) => void;
     addEventListener: <T extends any>(type: T, listener: THREE.EventListener<any, T, THREE.EventDispatcher<any>>) => void;
