@@ -34,7 +34,7 @@ module.exports = (env, argv) => {
             devtool,
             entry: './src/index-threex.ts',
             output: {
-                library: 'THREEx',
+                //library: 'THREEx',
                 path: path.resolve(__dirname, './dist'),
                 filename: 'ar-threex.js',
                 libraryTarget: 'umd',
