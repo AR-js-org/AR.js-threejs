@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+import { EventDispatcher, EventListener, Camera, Matrix4 } from 'three'
 import { IArToolkitContext, IContextParameters } from './CommonInterfaces/THREEx-interfaces';
 import { ArMarkerControls } from "./ArMarkerControls";
 import { setParameters } from './common-functions/utilityFunctions';
@@ -90,25 +90,25 @@ export class ArToolkitContext implements IArToolkitContext {
      * dispatch an Event as a THREE.EventDispatcher
      * @param {any} event
      */
-    dispatchEvent = THREE.EventDispatcher.prototype.dispatchEvent;
+    dispatchEvent = EventDispatcher.prototype.dispatchEvent;
     /**
      * Add an Event listeners as a THREE.EventDispatcher
      * @param {T extends any} type
-     * @param {T extends any} listener
+     * @param {EventListener} listener
      */
-    addEventListener = THREE.EventDispatcher.prototype.addEventListener;
+    addEventListener = EventDispatcher.prototype.addEventListener;
     /**
      * Check if has an Event listeners as a THREE.EventDispatcher
      * @param {T extends any} type
-     * @param {T extends any} listener
+     * @param {EventListener} listener
      */
-    hasEventListener = THREE.EventDispatcher.prototype.hasEventListener;
+    hasEventListener = EventDispatcher.prototype.hasEventListener;
     /**
      * Remove an Event listeners as a THREE.EventDispatcher
      * @param {T extends any} type
-     * @param {T extends any} listener
+     * @param {EventListener} listener
      */
-    removeEventListener = THREE.EventDispatcher.prototype.removeEventListener;
+    removeEventListener = EventDispatcher.prototype.removeEventListener;
 
     static baseURL = "https://ar-js-org.github.io/AR.js/three.js/";
     static REVISION = "3.4.3";
@@ -116,7 +116,7 @@ export class ArToolkitContext implements IArToolkitContext {
     /**
      * Create a default Camera 
      * @param {string} trackingBackend 
-     * @returns {THREE.Camera}
+     * @returns {Camera}
      * @deprecated use ARjs.Utils.createDefaultCamera instead
      */
     createDefaultCamera(trackingBackend: string) {
@@ -124,7 +124,7 @@ export class ArToolkitContext implements IArToolkitContext {
         // Create a camera
         let camera;
         if (trackingBackend === 'artoolkit') {
-            camera = new THREE.Camera();
+            camera = new Camera();
         } else console.assert(false);
         return camera
     }
@@ -256,12 +256,12 @@ export class ArToolkitContext implements IArToolkitContext {
         var _this = this;
 
         // set this._artoolkitProjectionAxisTransformMatrix to change artoolkit projection matrix axis to match usual webgl one
-        this._artoolkitProjectionAxisTransformMatrix = new THREE.Matrix4();
+        this._artoolkitProjectionAxisTransformMatrix = new Matrix4();
         this._artoolkitProjectionAxisTransformMatrix.multiply(
-            new THREE.Matrix4().makeRotationY(Math.PI)
+            new Matrix4().makeRotationY(Math.PI)
         );
         this._artoolkitProjectionAxisTransformMatrix.multiply(
-            new THREE.Matrix4().makeRotationZ(Math.PI)
+            new Matrix4().makeRotationZ(Math.PI)
         );
 
         // init controller
@@ -354,10 +354,10 @@ export class ArToolkitContext implements IArToolkitContext {
     };
 
     /**
-     * 
-     * @returns {THREE.Matrix4}
+     * getProjectionMatrix return the Camera Projection Matrix from the ARController camera.
+     * @returns {Matrix4}
      */
-    getProjectionMatrix(): THREE.Matrix4 {
+    getProjectionMatrix(): Matrix4 {
         // FIXME rename this function to say it is artoolkit specific - getArtoolkitProjectMatrix
         // keep a backward compatibility with a console.warn
 
@@ -369,7 +369,7 @@ export class ArToolkitContext implements IArToolkitContext {
 
         // get projectionMatrixArr from artoolkit       
         var projectionMatrixArr = this.arController.getCameraMatrix();
-        var projectionMatrix = new THREE.Matrix4().fromArray(projectionMatrixArr);
+        var projectionMatrix = new Matrix4().fromArray(projectionMatrixArr);
 
         // projectionMatrix.multiply(this._artoolkitProjectionAxisTransformMatrix)
         // return the result
