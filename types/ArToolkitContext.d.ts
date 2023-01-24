@@ -1,12 +1,10 @@
 import * as THREE from 'three';
 import { IArToolkitContext, IContextParameters } from './CommonInterfaces/THREEx-interfaces';
 import { ArMarkerControls } from "./ArMarkerControls";
-import jsartoolkit from "@ar-js-org/artoolkit5-js";
-declare const ARController: typeof jsartoolkit.ARController;
 export declare class ArToolkitContext implements IArToolkitContext {
     private _updatedAt;
     parameters: IContextParameters;
-    arController: typeof ARController;
+    arController: any;
     private initialized;
     private _arMarkersControls;
     _artoolkitProjectionAxisTransformMatrix: any;
@@ -27,4 +25,3 @@ export declare class ArToolkitContext implements IArToolkitContext {
     getProjectionMatrix(): THREE.Matrix4;
     private _updateArtoolkit;
 }
-export {};
