@@ -5,6 +5,9 @@ import { setParameters } from './common-functions/utilityFunctions';
 import jsartoolkit from "@ar-js-org/artoolkit5-js"; // TODO comment explanation
 const { ARController } = jsartoolkit;
 
+/**
+ * @class ArToolkitContext
+ */
 export class ArToolkitContext implements IArToolkitContext {
     private _updatedAt: any;
     public parameters: IContextParameters;
@@ -13,7 +16,12 @@ export class ArToolkitContext implements IArToolkitContext {
     private _arMarkersControls: any;
     public _artoolkitProjectionAxisTransformMatrix: any;
     private className: string;
-    constructor(parameters: any) {
+    /**
+     * Create a new instance of the ARToolkitContext, provide some valid paramters to it.
+     * @param {IContextParameters} parameters
+     * @see {IContextParameters}
+     */
+    constructor(parameters: IContextParameters) {
         this.className = "ArToolkitContext";
         this._updatedAt = null;
 
@@ -78,15 +86,39 @@ export class ArToolkitContext implements IArToolkitContext {
         //////////////////////////////////////////////////////////////////////////////
         setParameters(parameters, this)
     }
-
+    /**
+     * dispatch an Event as a THREE.EventDispatcher
+     * @param {any} event
+     */
     dispatchEvent = THREE.EventDispatcher.prototype.dispatchEvent;
+    /**
+     * Add an Event listeners as a THREE.EventDispatcher
+     * @param {T extends any} type
+     * @param {T extends any} listener
+     */
     addEventListener = THREE.EventDispatcher.prototype.addEventListener;
+    /**
+     * Check if has an Event listeners as a THREE.EventDispatcher
+     * @param {T extends any} type
+     * @param {T extends any} listener
+     */
     hasEventListener = THREE.EventDispatcher.prototype.hasEventListener;
+    /**
+     * Remove an Event listeners as a THREE.EventDispatcher
+     * @param {T extends any} type
+     * @param {T extends any} listener
+     */
     removeEventListener = THREE.EventDispatcher.prototype.removeEventListener;
 
     static baseURL = "https://ar-js-org.github.io/AR.js/three.js/";
     static REVISION = "3.4.3";
 
+    /**
+     * Create a default Camera 
+     * @param {string} trackingBackend 
+     * @returns {THREE.Camera}
+     * @deprecated use ARjs.Utils.createDefaultCamera instead
+     */
     createDefaultCamera(trackingBackend: string) {
         console.assert(false, 'use ARjs.Utils.createDefaultCamera instead')
         // Create a camera
@@ -97,7 +129,12 @@ export class ArToolkitContext implements IArToolkitContext {
         return camera
     }
 
-    init(onCompleted: Function) {
+    /**
+     * Init the artoolkit backend. This is one of the first steps in your app.
+     * @param {Function} onCompleted 
+     * @returns {void}
+     */
+    init(onCompleted: Function): void {
         var _this = this;
         if (this.parameters.trackingBackend === "artoolkit") {
             this._initArtoolkit(done);
@@ -116,6 +153,12 @@ export class ArToolkitContext implements IArToolkitContext {
         }
     };
 
+    /**
+     * update is where the data from an image or video stream is processed.
+     * This is mandatory otherwise the marker can not be detected.
+     * @param {HTMLImageElement | HTMLVideoElement} srcElement 
+     * @returns {boolean}
+     */
     update(srcElement: HTMLImageElement | HTMLVideoElement) {
         // be sure arController is fully initialized
         if (
@@ -185,12 +228,22 @@ export class ArToolkitContext implements IArToolkitContext {
     ////////////////////////////////////////////////////////////////////////////////
     //          Add/Remove markerControls
     ////////////////////////////////////////////////////////////////////////////////
-    addMarker(arMarkerControls: ArMarkerControls) {
+    /**
+     * Add a marker to be detected.
+     * @param {ArMarkerControls} arMarkerControls
+     * @returns {void}
+     */
+    addMarker(arMarkerControls: ArMarkerControls): void {
         console.assert(arMarkerControls instanceof ArMarkerControls);
         this._arMarkersControls.push(arMarkerControls);
     };
 
-    removeMarker(arMarkerControls: ArMarkerControls) {
+    /**
+     * Remove a marker from the class.
+     * @param {ArMarkerControls} arMarkerControls
+     * @returns {void}
+     */
+    removeMarker(arMarkerControls: ArMarkerControls): void {
         console.assert(arMarkerControls instanceof ArMarkerControls);
         var index = this._arMarkersControls.indexOf(arMarkerControls);
         if (index < 0) {
@@ -199,7 +252,7 @@ export class ArToolkitContext implements IArToolkitContext {
         this._arMarkersControls.splice(index, 1);
     };
 
-    private _initArtoolkit(onCompleted: any) {
+    private _initArtoolkit(onCompleted: Function) {
         var _this = this;
 
         // set this._artoolkitProjectionAxisTransformMatrix to change artoolkit projection matrix axis to match usual webgl one
@@ -300,7 +353,11 @@ export class ArToolkitContext implements IArToolkitContext {
         return this;
     };
 
-    getProjectionMatrix() {
+    /**
+     * 
+     * @returns {THREE.Matrix4}
+     */
+    getProjectionMatrix(): THREE.Matrix4 {
         // FIXME rename this function to say it is artoolkit specific - getArtoolkitProjectMatrix
         // keep a backward compatibility with a console.warn
 
