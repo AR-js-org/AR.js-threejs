@@ -50,9 +50,9 @@ function load(msg: any) {
       nftMarkerUrl = basePath + "/" + msg.marker;
     }
     ar.loadNFTMarker(nftMarkerUrl)
-      .then(function (markerId: any) {
+      .then(function (markerId: number) {
         ar.trackNFTMarkerId(markerId, 80);
-        let marker = ar.getNFTData(ar.id, 0);
+        let marker = ar.getNFTData(markerId, 0);
         console.log("nftMarker data: ", marker);
         postMessage({ type: "markerInfos", marker: JSON.stringify(marker) });
         postMessage({ type: "endLoading" });
