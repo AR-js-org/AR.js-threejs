@@ -2,7 +2,8 @@
   "name": "ar.js-threex",
   "version": "0.1.0",
   "description": "AR.js THREEx modular package - Typescript version",
-  "main": "dist/ar-threex.js",
+  "main": "dist/ar.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-ts": "webpack --mode development --progress --watch",
@@ -34,7 +35,7 @@
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
-    "@ar-js-org/artoolkit5-js": "https://github.com/AR-js-org/artoolkit5-js#0bcc20d2128c420c62be2516d5e7cccfd11c842d",
+    "@ar-js-org/artoolkit5-js": "^0.3.0",
     "three": "^0.148.0"
   }
 }
