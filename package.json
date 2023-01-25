@@ -1,7 +1,7 @@
 {
-  "name": "ar.js-threex",
+  "name": "@ar-js-org/ar.js-threejs",
   "version": "0.1.0",
-  "description": "AR.js THREEx modular package - Typescript version",
+  "description": "AR.js (THREEx, ARjs) modular package - Typescript version",
   "main": "dist/ar.js",
   "types": "types/index.d.ts",
   "scripts": {
