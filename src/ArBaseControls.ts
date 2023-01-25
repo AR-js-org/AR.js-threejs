@@ -1,9 +1,9 @@
-import { EventDispatcher, Object3D} from "three";
+import { EventDispatcher, Object3D } from "three";
 import { IArBaseControls } from "./CommonInterfaces/THREEx-interfaces";
 
 export class ArBaseControls extends EventDispatcher implements IArBaseControls {
-    static id: number;
-    private _id;
+    static _id: number = 0;
+    private id: number;
     protected object3d: Object3D;
     /**
      * THe ArBaseControls constructor, you need to pass a Theee.js Object3d to it.
@@ -11,8 +11,7 @@ export class ArBaseControls extends EventDispatcher implements IArBaseControls {
      */
     constructor(object3d: Object3D) {
         super()
-        this._id = ArBaseControls.id++;
-
+        this.id = ArBaseControls._id++
         this.object3d = object3d;
         this.object3d.matrixAutoUpdate = false;
         this.object3d.visible = false;
