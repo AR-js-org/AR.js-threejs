@@ -43,13 +43,6 @@ var arToolkitSource = new THREEx.ArToolkitSource({
 
     sourceWidth: window.innerWidth > window.innerHeight ? 640 : 480,
     sourceHeight: window.innerWidth > window.innerHeight ? 480 : 640,
-
-    sourceUrl: '',
-
-    displayWidth: 640,
-    displayHeight: 480,
-    
-    deviceId: ''
 })
 
 arToolkitSource.init(function onReady() {
@@ -86,16 +79,8 @@ function initARContext() { // create atToolkitContext
     arToolkitContext = new THREEx.ArToolkitContext({
         cameraParametersUrl: THREEx.ArToolkitContext.baseURL + './data/camera_para.dat',
         detectionMode: 'mono',
-        canvasWidth: 640,
-        canvasHeight: 480,
-        debug: false,
-        maxDetectionRate: 60,
-        patternRatio: 80,
-        matrixCodeType: '4x4',
-        labelingMode: 'black_region',
-        trackingBackend: 'artoolkit',
-        imageSmoothingEnabled: false
     })
+
     // initialize it
     arToolkitContext.init(() => { // copy projection matrix to camera
         camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
@@ -114,14 +99,6 @@ function initARContext() { // create atToolkitContext
         // patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji',
         // as we controls the camera, set changeMatrixMode: 'cameraTransformMatrix'
         changeMatrixMode: 'cameraTransformMatrix',
-        size: 0,
-        barcodeValue: 0,
-        descriptorsUrl: '',
-        minConfidence: 0,
-        smooth: false,
-        smoothCount: 0,
-        smoothThreshold: 0,
-        smoothTolerance: 0
     })
 
     scene.visible = false
