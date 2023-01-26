@@ -1,6 +1,9 @@
 import { ArBaseControls } from "./ArBaseControls";
 import { Matrix4, Object3D } from "three";
 import { IArMarkerControls, IArMarkerControlsParameters, IArToolkitContext } from "./CommonInterfaces/THREEx-interfaces";
+declare global {
+    var arMarkerControls: IArMarkerControls;
+}
 export declare class ArMarkerControls extends ArBaseControls implements IArMarkerControls {
     private context;
     private parameters;

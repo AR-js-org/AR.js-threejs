@@ -58,14 +58,12 @@ arToolkitSource.init(function onReady() {
         console.log(
             'canplay',
             'actual source dimensions',
-            //arToolkitSource.domElement.videoWidth,
-			//arToolkitSource.domElement.videoHeight,
-            640,
-            480
+            arToolkitSource.domElement.videoWidth,
+			arToolkitSource.domElement.videoHeight,
         );
         initARContext();
     }) as unknown as HTMLVideoElement;
-    //window.arToolkitSource = arToolkitSource;
+    window.arToolkitSource = arToolkitSource;
     setTimeout(() => {
         onResize()
     }, 2000);
@@ -79,12 +77,9 @@ window.addEventListener('resize', function () {
 function onResize() {
     arToolkitSource.onResizeElement()
     arToolkitSource.copyElementSizeTo(renderer.domElement)
-    if (arToolkitContext.arController !== null) {
-        arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)
-    }
-    /*if (window.arToolkitContext.arController !== null) {
+    if (window.arToolkitContext.arController !== null) {
         arToolkitSource.copyElementSizeTo(window.arToolkitContext.arController.canvas)
-    }*/
+    }
 }
 
 function initARContext() { // create atToolkitContext
@@ -109,7 +104,7 @@ function initARContext() { // create atToolkitContext
         arToolkitContext.arController.options.orientation = getSourceOrientation();
 
         console.log('arToolkitContext', arToolkitContext);
-        //window.arToolkitContext = arToolkitContext;
+        window.arToolkitContext = arToolkitContext;
     })
 
     // MARKER
@@ -132,7 +127,7 @@ function initARContext() { // create atToolkitContext
     scene.visible = false
 
     console.log('ArMarkerControls', arMarkerControls);
-    //window.arMarkerControls = arMarkerControls;
+    window.arMarkerControls = arMarkerControls;
 }
 
 function getSourceOrientation(): string {
@@ -142,20 +137,17 @@ function getSourceOrientation(): string {
 
     console.log(
         'actual source dimensions',
-        //arToolkitSource.domElement.videoWidth,
-        //arToolkitSource.domElement.videoHeight
-        640,
-        480
+        arToolkitSource.domElement.videoWidth,
+        arToolkitSource.domElement.videoHeight
     );
 
-    /*if (arToolkitSource.domElement.videoWidth > arToolkitSource.domElement.videoHeight) {
+    if (arToolkitSource.domElement.videoWidth > arToolkitSource.domElement.videoHeight) {
         console.log('source orientation', 'landscape');
         return 'landscape';
     } else {
         console.log('source orientation', 'portrait');
         return 'portrait';
-    }*/
-    return 'landscape'
+    }
 }
 
 window.addEventListener("markerFound", function (e) {

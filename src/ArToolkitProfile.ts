@@ -2,6 +2,9 @@ import { IArToolkitProfile, IContextParameters, IDefaultMarkerParameters, ISourc
 import { ArToolkitContext } from './ArToolkitContext'
 import { Utils } from './new-api/Utils'
 
+declare global {
+    var arToolkitProfile: IArToolkitProfile;
+}
 /**
  * ArToolkitProfile set the basic parameters to init the ARjs app:
  * sourceParameters, contextParameters and defaultMarkerParameters.
