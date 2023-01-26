@@ -5,6 +5,9 @@ import { setParameters } from './common-functions/utilityFunctions';
 import jsartoolkit from "@ar-js-org/artoolkit5-js"; // TODO comment explanation
 const { ARController } = jsartoolkit;
 
+declare global {
+    var arToolkitContext: IArToolkitContext;
+}
 /**
  * @class ArToolkitContext
  */

@@ -1,10 +1,14 @@
 import { ArBaseControls } from "./ArBaseControls";
 import { Matrix4, Object3D } from "three";
-import Worker  from "worker-loader?inline=no-fallback!./Worker";
+import Worker from "worker-loader?inline=no-fallback!./Worker";
 import { setParameters } from "./common-functions/utilityFunctions";
 import { IArMarkerControls, IArMarkerControlsParameters, IArToolkitContext } from "./CommonInterfaces/THREEx-interfaces";
 import jsartoolkit from "@ar-js-org/artoolkit5-js";
 const { ARToolkit } = jsartoolkit;
+
+declare global {
+    var arMarkerControls: IArMarkerControls;
+}
 
 /**
  * ArMarkerControls class. This is the class where you can set up the marker
@@ -300,7 +304,7 @@ export class ArMarkerControls extends ArBaseControls implements IArMarkerControl
             // listen to the event
             arController.addEventListener("getMarker", function (event: { data: { type: any; marker: { idPatt: any; idMatrix: any; }; }; }) {
                 //console.log(event);
-                
+
                 if (
                     event.data.type === ARToolkit.PATTERN_MARKER &&
                     _this.parameters.type === "pattern"

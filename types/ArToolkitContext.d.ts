@@ -1,6 +1,9 @@
 import { EventDispatcher, EventListener, Camera, Matrix4 } from 'three';
 import { IArToolkitContext, IContextParameters } from './CommonInterfaces/THREEx-interfaces';
 import { ArMarkerControls } from "./ArMarkerControls";
+declare global {
+    var arToolkitContext: IArToolkitContext;
+}
 export declare class ArToolkitContext implements IArToolkitContext {
     private _updatedAt;
     parameters: IContextParameters;

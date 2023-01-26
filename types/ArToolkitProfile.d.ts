@@ -1,4 +1,7 @@
 import { IArToolkitProfile, IContextParameters, IDefaultMarkerParameters, ISourceParameters } from './CommonInterfaces/THREEx-interfaces';
+declare global {
+    var arToolkitProfile: IArToolkitProfile;
+}
 export declare class ArToolkitProfile implements IArToolkitProfile {
     sourceParameters: ISourceParameters;
     contextParameters: IContextParameters;
