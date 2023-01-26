@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import { THREEx, ARjs } from "@ar-js-org/ar.js-threejs"
-import { log } from 'console';
 
 THREEx.ArToolkitContext.baseURL = "./";
 // log in the console the two newly created namespaces
@@ -54,7 +53,6 @@ var arToolkitSource = new THREEx.ArToolkitSource({
 })
 
 arToolkitSource.init(function onReady() {
-    console.log('here');
     
     arToolkitSource.domElement.addEventListener('canplay', () => {
         console.log(
@@ -68,7 +66,6 @@ arToolkitSource.init(function onReady() {
         initARContext();
     }) as unknown as HTMLVideoElement;
     //window.arToolkitSource = arToolkitSource;
-    console.log(arToolkitSource);
     setTimeout(() => {
         onResize()
     }, 2000);
@@ -77,7 +74,6 @@ arToolkitSource.init(function onReady() {
 // handle resize
 window.addEventListener('resize', function () {
     onResize()
-    console.log(THREEx);
 })
 
 function onResize() {
@@ -101,7 +97,7 @@ function initARContext() { // create atToolkitContext
         maxDetectionRate: 60,
         patternRatio: 80,
         matrixCodeType: '4x4',
-        labelingMode: 'artoolkit',
+        labelingMode: 'black_region',
         trackingBackend: 'artoolkit',
         imageSmoothingEnabled: false
     })
