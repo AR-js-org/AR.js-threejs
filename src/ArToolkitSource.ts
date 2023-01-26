@@ -360,15 +360,14 @@ export class ArToolkitSource implements IArToolkitSource {
           },
         };
 
-        if (null !== _this.parameters.deviceId) {
+        if (!! _this.parameters.deviceId) {
           userMediaConstraints.video.deviceId.exact = _this.parameters.deviceId;
-
         }
 
         // get a device which satisfy the constraints
         navigator.mediaDevices
           .getUserMedia(userMediaConstraints)
-          .then(function success(stream) {
+          .then((stream) => {
             // set the .src of the domElement
             domElement.srcObject = stream;
 
