@@ -51,30 +51,30 @@ export interface IArToolkitSource {
     onResize(arToolkitContext: IArToolkitContext, renderer: Renderer, camera: Camera): void;
 }
 export interface IArMarkerControlsParameters {
-    size: number;
-    type: string;
-    patternUrl: string;
-    barcodeValue: number;
-    descriptorsUrl: string;
-    changeMatrixMode: string;
-    minConfidence: number;
-    smooth: boolean;
-    smoothCount: number;
-    smoothTolerance: number;
-    smoothThreshold: number;
+    size?: number;
+    type?: string;
+    patternUrl?: string;
+    barcodeValue?: number;
+    descriptorsUrl?: string;
+    changeMatrixMode?: string;
+    minConfidence?: number;
+    smooth?: boolean;
+    smoothCount?: number;
+    smoothTolerance?: number;
+    smoothThreshold?: number;
 }
 export interface IContextParameters {
-    canvasWidth: number;
-    canvasHeight: number;
-    debug: boolean;
+    canvasWidth?: number;
+    canvasHeight?: number;
+    debug?: boolean;
     cameraParametersUrl: string;
     detectionMode: string;
-    maxDetectionRate: number;
-    matrixCodeType: string;
-    patternRatio: number;
-    labelingMode: string;
-    trackingBackend: string;
-    imageSmoothingEnabled: boolean;
+    maxDetectionRate?: number;
+    matrixCodeType?: string;
+    patternRatio?: number;
+    labelingMode?: string;
+    trackingBackend?: string;
+    imageSmoothingEnabled?: boolean;
 }
 export interface IDefaultMarkerParameters {
     type: string;
@@ -84,12 +84,12 @@ export interface IDefaultMarkerParameters {
 }
 export interface ISourceParameters {
     sourceType: string;
-    sourceUrl: string;
-    deviceId: string;
+    sourceUrl?: string;
+    deviceId?: string;
     sourceWidth: number;
     sourceHeight: number;
-    displayWidth: number;
-    displayHeight: number;
+    displayWidth?: number;
+    displayHeight?: number;
 }
 export interface IUserMediaConstraints {
     audio: boolean;

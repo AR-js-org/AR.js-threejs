@@ -1,8 +1,11 @@
 import { IArToolkitSource, IArToolkitContext, ISourceParameters } from "./CommonInterfaces/THREEx-interfaces";
 import { Renderer, Camera } from 'three';
+declare global {
+    var arToolkitSource: IArToolkitSource;
+}
 export declare class ArToolkitSource implements IArToolkitSource {
     ready: boolean;
-    domElement: HTMLImageElement | HTMLVideoElement;
+    domElement: any;
     parameters: ISourceParameters;
     private className;
     constructor(parameters: ISourceParameters);

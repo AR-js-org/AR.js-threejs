@@ -2,13 +2,17 @@ import { IArToolkitSource, IArToolkitContext, ISourceParameters, IUserMediaConst
 import { setParameters } from "./common-functions/utilityFunctions";
 import { Renderer, Camera } from 'three'
 
+declare global {
+  var arToolkitSource: IArToolkitSource;
+}
 /**
  * ArToolkitSource
  * @class ArToolkitSource
  */
 export class ArToolkitSource implements IArToolkitSource {
   public ready: boolean;
-  public domElement: HTMLImageElement | HTMLVideoElement;
+  //public domElement: HTMLImageElement | HTMLVideoElement;
+  public domElement: any;
   public parameters: ISourceParameters;
   private className: string;
 
@@ -55,14 +59,13 @@ export class ArToolkitSource implements IArToolkitSource {
    */
   init(onReady: Function, onError: Function): this {
     var _this = this;
-    var domElement: HTMLImageElement | HTMLVideoElement;
+    var domElement: any;
 
     if (this.parameters.sourceType === "image") {
       domElement = this._initSourceImage(onSourceReady, onError);
     } else if (this.parameters.sourceType === "video") {
       domElement = this._initSourceVideo(onSourceReady, onError);
     } else if (this.parameters.sourceType === "webcam") {
-      // var domElement = this._initSourceWebcamOld(onSourceReady)
       domElement = this._initSourceWebcam(onSourceReady, onError);
     } else {
       console.assert(false);
@@ -249,7 +252,7 @@ export class ArToolkitSource implements IArToolkitSource {
     }
   };
 
-  private _initSourceImage(onReady: any, onError: any) {
+  private _initSourceImage(onReady: any, onError: any): HTMLImageElement {
     // TODO make it static
     var domElement: HTMLImageElement = document.createElement("img");
     domElement.src = this.parameters.sourceUrl;
@@ -263,7 +266,7 @@ export class ArToolkitSource implements IArToolkitSource {
     return domElement;
   };
 
-  private _initSourceVideo(onReady: any, onError: any) {
+  private _initSourceVideo(onReady: any, onError: any): HTMLVideoElement {
     // TODO make it static
     var domElement: HTMLVideoElement = document.createElement("video");
     domElement.src = this.parameters.sourceUrl;
@@ -289,7 +292,7 @@ export class ArToolkitSource implements IArToolkitSource {
     return domElement;
   };
 
-  private _initSourceWebcam(onReady: any, onError: any) {
+  private _initSourceWebcam(onReady: any, onError: any): HTMLVideoElement {
     var _this = this;
 
     // init default value
@@ -360,15 +363,14 @@ export class ArToolkitSource implements IArToolkitSource {
           },
         };
 
-        if (null !== _this.parameters.deviceId) {
+        if (!!_this.parameters.deviceId) {
           userMediaConstraints.video.deviceId.exact = _this.parameters.deviceId;
-
         }
 
         // get a device which satisfy the constraints
         navigator.mediaDevices
           .getUserMedia(userMediaConstraints)
-          .then(function success(stream) {
+          .then((stream) => {
             // set the .src of the domElement
             domElement.srcObject = stream;
 
