@@ -1,7 +1,7 @@
 import { EventDispatcher, Object3D } from "three";
 import { IArBaseControls } from "./CommonInterfaces/THREEx-interfaces";
 
-export class ArBaseControls extends EventDispatcher implements IArBaseControls {
+export abstract class ArBaseControls extends EventDispatcher implements IArBaseControls {
     static _id: number = 0;
     private id: number;
     protected object3d: Object3D;
@@ -21,16 +21,11 @@ export class ArBaseControls extends EventDispatcher implements IArBaseControls {
      * a virtual update method to implement in the derived class.
      * @return {void}
      */
-    update(): void {
-        console.assert(false, "you need to implement your own update");
-    };
+    abstract update(object3d: Object3D): void;
 
     /**
      * a virtual name method to implement in the derived class.
      * @return {string}
      */
-    name(): string {
-        console.assert(false, "you need to implement your own .name()");
-        return "Not yet implemented - name()";
-    };
+    abstract name(): string;
 }

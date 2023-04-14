@@ -220,6 +220,11 @@ export class ArMarkerControls extends ArBaseControls implements IArMarkerControl
         return renderReqd;
     };
 
+
+    update(object3d: Object3D) {
+        console.log("update not required", object3d)
+    }
+
     //////////////////////////////////////////////////////////////////////////////
     //		utility functions
     //////////////////////////////////////////////////////////////////////////////

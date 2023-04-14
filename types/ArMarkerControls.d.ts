@@ -13,6 +13,7 @@ export declare class ArMarkerControls extends ArBaseControls implements IArMarke
     constructor(context: IArToolkitContext, object3d: Object3D, parameters: IArMarkerControlsParameters);
     dispose(): void;
     updateWithModelViewMatrix(modelViewMatrix: Matrix4): boolean;
+    update(object3d: Object3D): void;
     name(): string;
     private _initArtoolkit;
 }
