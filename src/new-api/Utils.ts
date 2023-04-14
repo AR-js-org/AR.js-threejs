@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import {PerspectiveCamera} from "three";
 
 export class Utils {
 
@@ -14,7 +14,7 @@ export class Utils {
             Utils.parseTrackingMethod(trackingMethod).trackingBackend;
         // Create a camera
         if (trackingBackend === "artoolkit") {
-            var camera = new THREE.Camera();
+            var camera = new PerspectiveCamera();
         } else console.assert(false, "unknown trackingBackend: " + trackingBackend);
 
         return camera;
