@@ -6,6 +6,7 @@ import { ArToolkitSource as _ArToolkitSource } from "./ArToolkitSource";
 import { ArMarkerCloak as _ArMarkerCloak } from "./ArMarkerCloak";
 import { ArMarkerControls as _ArMarkerControls  } from "./ArMarkerControls";
 import { ArMarkerHelper as _ArMarkerHelper } from "./ArMarkerHelper";
+import { ArVideoInWebgl as _ArVideoInWebgl } from "./ArVideoInWebgl";
 import { Utils as _Utils } from "./new-api/Utils";
 
 export namespace THREEx {
@@ -17,6 +18,7 @@ export namespace THREEx {
   export const ArMarkerCloak = _ArMarkerCloak;
   export const ArMarkerControls = _ArMarkerControls ;
   export const ArMarkerHelper = _ArMarkerHelper;
+  export const ArVideoInWebgl = _ArVideoInWebgl;
 };
 
 export namespace ARjs {
