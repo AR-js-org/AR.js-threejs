@@ -3,7 +3,7 @@ import { IArBaseControls } from "./CommonInterfaces/THREEx-interfaces";
 
 export abstract class ArBaseControls extends EventDispatcher implements IArBaseControls {
     static _id: number = 0;
-    private id: number;
+    public id: number;
     protected object3d: Object3D;
     /**
      * THe ArBaseControls constructor, you need to pass a Theee.js Object3d to it.
