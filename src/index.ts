@@ -7,7 +7,17 @@ import { ArMarkerCloak as _ArMarkerCloak } from "./ArMarkerCloak";
 import { ArMarkerControls as _ArMarkerControls  } from "./ArMarkerControls";
 import { ArMarkerHelper as _ArMarkerHelper } from "./ArMarkerHelper";
 import { ArVideoInWebgl as _ArVideoInWebgl } from "./ArVideoInWebgl";
+import { HitTestingPlane as _HitTestingPlane } from "./HitTestingPlane";
+import { Context as _Context } from "./Context";
+import { Profile as _Profile } from "./Profile";
+import { Source as _Source } from "./Source";
+
+import { Anchor as _Anchor } from "./new-api/Anchor";
+import { Session as _Session } from "./new-api/Session";
+import { SessionDebugUI as _SessionDebugUI } from "./new-api/SessionDebugUI";
+import { AnchorDebugUI as _AnchorDebugUI } from "./new-api/SessionDebugUI";
 import { Utils as _Utils } from "./new-api/Utils";
+import { HitTesting as _HitTesting } from "./new-api/HitTesting";
 
 export namespace THREEx {
   export const ArClickability = _ArClickability;
@@ -19,8 +29,16 @@ export namespace THREEx {
   export const ArMarkerControls = _ArMarkerControls ;
   export const ArMarkerHelper = _ArMarkerHelper;
   export const ArVideoInWebgl = _ArVideoInWebgl;
+  export const HitTestingPlane = _HitTestingPlane;
 };
 
 export namespace ARjs {
+  export const Anchor = _Anchor;
+  export const Profile = _Profile;
+  export const Session = _Session;
+  export const SessionDebugUI = _SessionDebugUI;
+  export const AnchorDebugUI = _AnchorDebugUI;
+  export const Source = _Source;
   export const Utils = _Utils;
+  export const HitTesting = _HitTesting;
  };

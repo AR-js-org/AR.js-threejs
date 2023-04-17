@@ -21,6 +21,7 @@ export class ArMarkerControls extends ArBaseControls implements IArMarkerControl
     private smoothMatrices: any[];
     private onGetMarker: Function;
     private className: string;
+    declare public object3d: Object3D;
 
     /**
      * ArMarkerControls constructor, needs context, object3d and a bunch of parameters.

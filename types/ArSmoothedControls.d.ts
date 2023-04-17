@@ -6,7 +6,7 @@ export declare class ArSmoothedControls extends ArBaseControls implements IArSmo
     private _visibleStartedAt;
     private _unvisibleStartedAt;
     parameters: ISmoothedControlsParameters;
-    constructor(object3d: Object3D, parameters: ISmoothedControlsParameters);
+    constructor(object3d: Object3D, parameters?: ISmoothedControlsParameters);
     update(targetObject3d: Object3D): void;
     name(): string;
 }

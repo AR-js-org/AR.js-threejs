@@ -8,6 +8,7 @@ export interface IArMarkerControls {
     dispose(): void;
     updateWithModelViewMatrix(modelViewMatrix: Matrix4): boolean;
     name(): string;
+    object3d: Object3D;
 }
 
 export interface IArSmoothedControls {
@@ -96,7 +97,7 @@ export interface IDefaultMarkerParameters {
 }
 
 export interface ISourceParameters {
-    sourceType: string,
+    sourceType?: string,
     sourceUrl?: string,
     deviceId?: string,
     sourceWidth: number,
@@ -133,4 +134,15 @@ export interface IUserMediaConstraints {
         }
     }
 
+}
+
+export interface IArMarkerAreaControlsParameters{
+    subMarkersControls: IArMarkerControls[],
+    subMarkerPoses: Matrix4[],
+    changeMatrixMode: string
+}
+
+export interface IArMarkerAreaControls{
+    parameters: IArMarkerAreaControlsParameters;
+    subMarkersControls: IArMarkerControls[];
 }

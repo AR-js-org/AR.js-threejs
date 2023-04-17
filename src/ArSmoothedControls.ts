@@ -16,7 +16,7 @@ export class ArSmoothedControls extends ArBaseControls implements IArSmoothedCon
      * @param {[type]} object3d   [description]
      * @param {[type]} parameters [description]
      */
-    constructor(object3d: Object3D, parameters: ISmoothedControlsParameters) {
+    constructor(object3d: Object3D, parameters?: ISmoothedControlsParameters) {
         super(object3d);
         // copy parameters
         this.object3d.visible = false;
