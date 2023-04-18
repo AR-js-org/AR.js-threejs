@@ -92,11 +92,9 @@ export class ArToolkitProfile implements IArToolkitProfile {
      * @returns this
      */
     defaultMarker(trackingBackend?: string): this {
-        //console.log(this.contextParameters.trackingBackend);
-        
-        this.trackingBackend(trackingBackend || this.contextParameters.trackingBackend);
+        var _trackingBackend = trackingBackend || this.contextParameters.trackingBackend;
 
-        if (trackingBackend === 'artoolkit') {
+        if (_trackingBackend === 'artoolkit') {
             this.contextParameters.detectionMode = 'mono'
             this.defaultMarkerParameters.type = 'pattern'
             this.defaultMarkerParameters.patternUrl = ArToolkitContext.baseURL + '../data/data/patt.hiro'
