@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { Matrix4, Quaternion, Vector3} from "three";
 import { MarkersAreaControls } from "./arjs-markersareacontrols";
 import { ArToolkitContext } from "../ArToolkitContext";
 
@@ -44,10 +44,10 @@ export class MarkersAreaLearning {
 
     var count = Object.keys(visibleMarkerControls).length;
 
-    var positionDelta = new THREE.Vector3();
-    var quaternionDelta = new THREE.Quaternion();
-    var scaleDelta = new THREE.Vector3();
-    var tmpMatrix = new THREE.Matrix4();
+    var positionDelta = new Vector3();
+    var quaternionDelta = new Quaternion();
+    var scaleDelta = new Vector3();
+    var tmpMatrix = new Matrix4();
 
     // go thru all the visibleMarkerControls
     for (var i = 0; i < count; i++) {
@@ -72,16 +72,16 @@ export class MarkersAreaLearning {
           seenCouples[markerControls2.id] = {
             count: 0,
             position: {
-              sum: new THREE.Vector3(0, 0, 0),
-              average: new THREE.Vector3(0, 0, 0),
+              sum: new Vector3(0, 0, 0),
+              average: new Vector3(0, 0, 0),
             },
             quaternion: {
-              sum: new THREE.Quaternion(0, 0, 0, 0),
-              average: new THREE.Quaternion(0, 0, 0, 0),
+              sum: new Quaternion(0, 0, 0, 0),
+              average: new Quaternion(0, 0, 0, 0),
             },
             scale: {
-              sum: new THREE.Vector3(0, 0, 0),
-              average: new THREE.Vector3(0, 0, 0),
+              sum: new Vector3(0, 0, 0),
+              average: new Vector3(0, 0, 0),
             },
           };
         }
@@ -138,7 +138,7 @@ export class MarkersAreaLearning {
 
     // special case of originSubControls averageMatrix
     originSubControls.object3d.userData.result = {
-      averageMatrix: new THREE.Matrix4(),
+      averageMatrix: new Matrix4(),
       confidenceFactor: 1,
     };
     // TODO here check if the originSubControls has been seen at least once!!
@@ -181,7 +181,7 @@ export class MarkersAreaLearning {
         var seenCoupleStats =
           subMarkerControls.object3d.userData.seenCouples[otherSubControlsID];
 
-        var averageMatrix = new THREE.Matrix4();
+        var averageMatrix = new Matrix4();
         averageMatrix.compose(
           seenCoupleStats.position.average,
           seenCoupleStats.quaternion.average,
@@ -288,7 +288,7 @@ export class MarkersAreaLearning {
     };
 
     var originSubControls = this.subMarkersControls[0];
-    var originMatrixInverse = new THREE.Matrix4()
+    var originMatrixInverse = new Matrix4()
       .copy(originSubControls.object3d.matrix)
       .invert();
     this.subMarkersControls.forEach(function (subMarkerControls: any, index: number) {
@@ -296,7 +296,7 @@ export class MarkersAreaLearning {
       if (subMarkerControls.object3d.userData.result === undefined) return;
 
       var poseMatrix = subMarkerControls.object3d.userData.result.averageMatrix;
-      console.assert(poseMatrix instanceof THREE.Matrix4);
+      console.assert(poseMatrix instanceof Matrix4);
 
       // build the info
       var info: any = {
@@ -361,4 +361,3 @@ export class MarkersAreaLearning {
     });
   };
 }
-//export default MarkersAreaLearning;

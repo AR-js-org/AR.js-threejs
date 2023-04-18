@@ -145,4 +145,5 @@ export interface IArMarkerAreaControlsParameters{
 export interface IArMarkerAreaControls{
     parameters: IArMarkerAreaControlsParameters;
     subMarkersControls: IArMarkerControls[];
+    updateSmoothedControls(smooth: any, lerps?: any): void;
 }

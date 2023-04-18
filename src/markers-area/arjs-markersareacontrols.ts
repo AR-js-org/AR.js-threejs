@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { Box3, Matrix4, Object3D, Quaternion, Vector3 } from "three";
 import { ArBaseControls } from "../ArBaseControls";
 import { ArMarkerControls } from "../ArMarkerControls";
 import { IArMarkerControls, IArMarkerAreaControlsParameters } from "../CommonInterfaces/THREEx-interfaces";
@@ -14,10 +14,10 @@ export class MarkersAreaControls extends ArBaseControls {
   public subMarkerPoses: THREE.Matrix4[];
   public parameters: IArMarkerAreaControlsParameters;
   //public object3d: any;
-  constructor(arToolkitContext: any, object3d: THREE.Object3D, parameters: any) {
+  constructor(arToolkitContext: any, object3d: Object3D, parameters: any) {
     super(object3d)
     var _this = this;
-    //ArBaseControls.call(this, object3d);
+
     this.parameters = {} as IArMarkerAreaControlsParameters;
 
     if (arguments.length > 3)
@@ -48,9 +48,6 @@ export class MarkersAreaControls extends ArBaseControls {
     });
   };
 
-  //MarkersAreaControls.prototype = Object.create(ArBaseControls.prototype);
-  //MarkersAreaControls.prototype.constructor = MarkersAreaControls;
-
   //////////////////////////////////////////////////////////////////////////////
   //		Code Separator
   //////////////////////////////////////////////////////////////////////////////
@@ -63,16 +60,16 @@ export class MarkersAreaControls extends ArBaseControls {
     var stats = {
       count: 0,
       position: {
-        sum: new THREE.Vector3(0, 0, 0),
-        average: new THREE.Vector3(0, 0, 0),
+        sum: new Vector3(0, 0, 0),
+        average: new Vector3(0, 0, 0),
       },
       quaternion: {
-        sum: new THREE.Quaternion(0, 0, 0, 0),
-        average: new THREE.Quaternion(0, 0, 0, 0),
+        sum: new Quaternion(0, 0, 0, 0),
+        average: new Quaternion(0, 0, 0, 0),
       },
       scale: {
-        sum: new THREE.Vector3(0, 0, 0),
-        average: new THREE.Vector3(0, 0, 0),
+        sum: new Vector3(0, 0, 0),
+        average: new Vector3(0, 0, 0),
       },
     };
 
@@ -90,12 +87,12 @@ export class MarkersAreaControls extends ArBaseControls {
       // transformation matrix of this.object3d according to this sub-markers
       var matrix = markerObject3d.matrix.clone();
       var markerPose = _this.parameters.subMarkerPoses[markerIndex];
-      matrix.multiply(new THREE.Matrix4().copy(markerPose).invert());
+      matrix.multiply(new Matrix4().copy(markerPose).invert());
 
       // decompose the matrix into .position, .quaternion, .scale
-      var position = new THREE.Vector3();
-      var quaternion = new THREE.Quaternion();
-      var scale = new THREE.Vector3();
+      var position = new Vector3();
+      var quaternion = new Quaternion();
+      var scale = new Vector3();
       matrix.decompose(position, quaternion, scale);
 
       // http://wiki.unity3d.com/index.php/Averaging_Quaternions_and_Vectors
@@ -132,7 +129,7 @@ export class MarkersAreaControls extends ArBaseControls {
     // if at least one sub-marker has been detected, make the average of all detected markers
     if (stats.count > 0) {
       // compute modelViewMatrix
-      var modelViewMatrix = new THREE.Matrix4();
+      var modelViewMatrix = new Matrix4();
       modelViewMatrix.compose(
         stats.position.average,
         stats.quaternion.average,
@@ -175,13 +172,13 @@ export class MarkersAreaControls extends ArBaseControls {
     count: any,
     quaternionAverage: any
   ) {
-    quaternionAverage = quaternionAverage || new THREE.Quaternion();
+    quaternionAverage = quaternionAverage || new Quaternion();
     // sanity check
-    console.assert(firstQuaternion instanceof THREE.Quaternion === true);
+    console.assert(firstQuaternion instanceof Quaternion === true);
 
     // from http://wiki.unity3d.com/index.php/Averaging_Quaternions_and_Vectors
     if (newQuaternion.dot(firstQuaternion) > 0) {
-      newQuaternion = new THREE.Quaternion(
+      newQuaternion = new Quaternion(
         -newQuaternion.x,
         -newQuaternion.y,
         -newQuaternion.z,
@@ -210,7 +207,7 @@ export class MarkersAreaControls extends ArBaseControls {
     count: any,
     vector3Average: any
   ) {
-    vector3Average = vector3Average || new THREE.Vector3();
+    vector3Average = vector3Average || new Vector3();
 
     vector3Sum.x += vector3.x;
     vector3Sum.y += vector3.y;
@@ -235,26 +232,26 @@ export class MarkersAreaControls extends ArBaseControls {
     var stats = {
       count: 0,
       position: {
-        sum: new THREE.Vector3(0, 0, 0),
-        average: new THREE.Vector3(0, 0, 0),
+        sum: new Vector3(0, 0, 0),
+        average: new Vector3(0, 0, 0),
       },
       quaternion: {
-        sum: new THREE.Quaternion(0, 0, 0, 0),
-        average: new THREE.Quaternion(0, 0, 0, 0),
+        sum: new Quaternion(0, 0, 0, 0),
+        average: new Quaternion(0, 0, 0, 0),
       },
       scale: {
-        sum: new THREE.Vector3(0, 0, 0),
-        average: new THREE.Vector3(0, 0, 0),
+        sum: new Vector3(0, 0, 0),
+        average: new Vector3(0, 0, 0),
       },
     };
-    var firstQuaternion = new THREE.Quaternion(); // FIXME ???
+    var firstQuaternion = new Quaternion(); // FIXME ???
 
     multiMarkerFile.subMarkersControls.forEach(function (item: any) {
-      var poseMatrix = new THREE.Matrix4().fromArray(item.poseMatrix);
+      var poseMatrix = new Matrix4().fromArray(item.poseMatrix);
 
-      var position = new THREE.Vector3();
-      var quaternion = new THREE.Quaternion();
-      var scale = new THREE.Vector3();
+      var position = new Vector3();
+      var quaternion = new Quaternion();
+      var scale = new Vector3();
       poseMatrix.decompose(position, quaternion, scale);
 
       // http://wiki.unity3d.com/index.php/Averaging_Quaternions_and_Vectors
@@ -281,7 +278,7 @@ export class MarkersAreaControls extends ArBaseControls {
       );
     });
 
-    var averageMatrix = new THREE.Matrix4();
+    var averageMatrix = new Matrix4();
     averageMatrix.compose(
       stats.position.average,
       stats.quaternion.average,
@@ -293,14 +290,14 @@ export class MarkersAreaControls extends ArBaseControls {
 
   static computeBoundingBox(jsonData: any) {
     var multiMarkerFile = JSON.parse(jsonData);
-    var boundingBox = new THREE.Box3();
+    var boundingBox = new Box3();
 
     multiMarkerFile.subMarkersControls.forEach(function (item: any) {
-      var poseMatrix = new THREE.Matrix4().fromArray(item.poseMatrix);
+      var poseMatrix = new Matrix4().fromArray(item.poseMatrix);
 
-      var position = new THREE.Vector3();
-      var quaternion = new THREE.Quaternion();
-      var scale = new THREE.Vector3();
+      var position = new Vector3();
+      var quaternion = new Quaternion();
+      var scale = new Vector3();
       poseMatrix.decompose(position, quaternion, scale);
 
       boundingBox.expandByPoint(position);
@@ -374,7 +371,7 @@ export class MarkersAreaControls extends ArBaseControls {
     // prepare the parameters
     multiMarkerFile.subMarkersControls.forEach(function (item: any) {
       // create a markerRoot
-      var markerRoot = new THREE.Object3D();
+      var markerRoot = new Object3D();
       parent3D.add(markerRoot);
 
       // create markerControls for our markerRoot
@@ -387,7 +384,7 @@ export class MarkersAreaControls extends ArBaseControls {
       // if( true ){
       // store it in the parameters
       subMarkersControls.push(subMarkerControls);
-      subMarkerPoses.push(new THREE.Matrix4().fromArray(item.poseMatrix));
+      subMarkerPoses.push(new Matrix4().fromArray(item.poseMatrix));
       // }else{
       // 		// build a smoothedControls
       // 		var smoothedRoot = new THREE.Group()
@@ -423,4 +420,3 @@ export class MarkersAreaControls extends ArBaseControls {
     return multiMarkerControls;
   };
 }
-//export default MarkersAreaControls;

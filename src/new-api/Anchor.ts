@@ -1,10 +1,10 @@
-import * as THREE from "three";
+import { Group, Object3D } from "three";
 import { ArMarkerControls } from "../ArMarkerControls"; // Alias for dynamic importing
 import { ArMarkerHelper } from "../ArMarkerHelper";
 import { ArSmoothedControls } from "../ArSmoothedControls";
 import { MarkersAreaControls } from "../markers-area/arjs-markersareacontrols";
 import { MarkersAreaUtils } from "../markers-area/arjs-markersareautils";
-import { IArMarkerAreaControls, IArMarkerAreaControlsParameters, IArMarkerControls } from "../CommonInterfaces/THREEx-interfaces";
+import { IArMarkerAreaControls, IArMarkerAreaControlsParameters, IArMarkerControls, IArSmoothedControls } from "../CommonInterfaces/THREEx-interfaces";
 
 // TODO this is a controls... should i give the object3d here ?
 // not according to 'no three.js dependancy'
@@ -20,12 +20,12 @@ export class Anchor {
     private parameters: any;
     private controls: any;
     private markersArea: any;
-    private object3d: any;
-    private smoothedControls: any;
-    private multiMarkerControls: any;
-    private markerRoot: any;
+    private object3d: Object3D;
+    private smoothedControls: IArSmoothedControls;
+    private multiMarkerControls: IArMarkerAreaControls;
+    private markerRoot: Group;
     constructor(arSession: any, markerParameters: any) {
-        var _this = this;
+        //var _this = this;
         var arContext = arSession.arContext;
         var scene = arSession.parameters.scene;
         var camera = arSession.parameters.camera;
@@ -42,7 +42,7 @@ export class Anchor {
             markerParameters.markersAreaEnabled
         );
 
-        this.markerRoot = new THREE.Group();
+        this.markerRoot = new Group();
         scene.add(this.markerRoot);
         var controlledObject;
         // set controlledObject depending on changeMatrixMode
@@ -134,14 +134,14 @@ export class Anchor {
             });
             // define API specific to markersArea
             this.markersArea = {};
-            this.markersArea.setSubMarkersVisibility = function (visible: any) {
+            this.markersArea.setSubMarkersVisibility = function (visible: boolean) {
                 markerHelpers.forEach(function (markerHelper) {
                     markerHelper.object3d.visible = visible;
                 });
             };
         }
 
-        this.object3d = new THREE.Group();
+        this.object3d = new Group();
 
         //////////////////////////////////////////////////////////////////////////////
         //		THREEx.ArSmoothedControls
@@ -151,7 +151,7 @@ export class Anchor {
 
         if (shouldBeSmoothed === true) {
             // build a smoothedControls
-            var smoothedRoot = new THREE.Group();
+            var smoothedRoot = new Group();
             scene.add(smoothedRoot);
             this.smoothedControls = new ArSmoothedControls(smoothedRoot);
             smoothedRoot.add(this.object3d);
@@ -176,5 +176,3 @@ export class Anchor {
         }
     }
 };
-
-export default Anchor;

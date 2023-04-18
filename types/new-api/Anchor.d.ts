@@ -10,4 +10,3 @@ export declare class Anchor {
     constructor(arSession: any, markerParameters: any);
     update(): void;
 }
-export default Anchor;

@@ -1,8 +1,8 @@
-import {PerspectiveCamera} from "three";
+import { PerspectiveCamera } from "three";
 
 export class Utils {
 
-    constructor() {}
+    constructor() { }
     /**
      * Create a default rendering camera for this trackingBackend. They may be modified later. to fit physical camera parameters
      *

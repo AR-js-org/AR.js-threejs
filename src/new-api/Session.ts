@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { Camera, Scene, WebGLRenderer } from "three";
 import { Source } from "../Source";
 import { Context } from "../Context"; // TODO context build-dependent
 import { setParameters } from '../common-functions/utilityFunctions';
@@ -28,32 +28,11 @@ export class Session {
         //		setParameters
         //////////////////////////////////////////////////////////////////////////////
         setParameters(parameters, this);
-        /*function setParameters(parameters) {
-          if (parameters === undefined) return;
-          for (var key in parameters) {
-            var newValue = parameters[key];
-      
-            if (newValue === undefined) {
-              console.warn("THREEx.Session: '" + key + "' parameter is undefined.");
-              continue;
-            }
-      
-            var currentValue = _this.parameters[key];
-      
-            if (currentValue === undefined) {
-              console.warn(
-                "THREEx.Session: '" + key + "' is not a property of this material."
-              );
-              continue;
-            }
-      
-            _this.parameters[key] = newValue;
-          }
-        }----*/
+
         // sanity check
-        console.assert(this.parameters.renderer instanceof THREE.WebGLRenderer);
-        console.assert(this.parameters.camera instanceof THREE.Camera);
-        console.assert(this.parameters.scene instanceof THREE.Scene);
+        console.assert(this.parameters.renderer instanceof WebGLRenderer);
+        console.assert(this.parameters.camera instanceof Camera);
+        console.assert(this.parameters.scene instanceof Scene);
 
         // backward emulation
         Object.defineProperty(this, "renderer", {
@@ -147,16 +126,6 @@ export class Session {
                 _this.parameters.camera
             );
         });
-
-        //////////////////////////////////////////////////////////////////////////////
-        //		update function
-        //////////////////////////////////////////////////////////////////////////////
-        // update artoolkit on every frame
-        /* this.update = function () {
-             if (arSource.ready === false) return;
- 
-             arContext.update(arSource.domElement);
-         };*/
     };
 
     //////////////////////////////////////////////////////////////////////////////

@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { Matrix4 } from "three";
 import { Context } from "../Context"; // TODO context build-dependent
 
 export class MarkersAreaUtils {
@@ -72,7 +72,7 @@ export class MarkersAreaUtils {
     // add a subMarkersControls
     file.subMarkersControls[0] = {
       parameters: {},
-      poseMatrix: new THREE.Matrix4().makeTranslation(0, 0, 0).toArray(),
+      poseMatrix: new Matrix4().makeTranslation(0, 0, 0).toArray(),
     };
     if (trackingBackend === "artoolkit") {
       file.subMarkersControls[0].parameters.type = "pattern";
@@ -239,7 +239,7 @@ export class MarkersAreaUtils {
       // create subMarkersControls
       var subMarkersControls = {
         parameters: {},
-        poseMatrix: new THREE.Matrix4()
+        poseMatrix: new Matrix4()
           .makeTranslation(positionX, 0, positionZ)
           .toArray(),
       };
