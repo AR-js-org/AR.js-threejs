@@ -4,7 +4,7 @@ import { ArMarkerHelper } from "../ArMarkerHelper";
 import { ArSmoothedControls } from "../ArSmoothedControls";
 import { MarkersAreaControls } from "../markers-area/arjs-markersareacontrols";
 import { MarkersAreaUtils } from "../markers-area/arjs-markersareautils";
-import {IArMarkerAreaControls, IArMarkerAreaControlsParameters, IArMarkerControls } from "../CommonInterfaces/THREEx-interfaces";
+import { IArMarkerAreaControls, IArMarkerAreaControlsParameters, IArMarkerControls } from "../CommonInterfaces/THREEx-interfaces";
 
 // TODO this is a controls... should i give the object3d here ?
 // not according to 'no three.js dependancy'
@@ -21,6 +21,9 @@ export class Anchor {
     private controls: any;
     private markersArea: any;
     private object3d: any;
+    private smoothedControls: any;
+    private multiMarkerControls: any;
+    private markerRoot: any;
     constructor(arSession: any, markerParameters: any) {
         var _this = this;
         var arContext = arSession.arContext;
@@ -39,12 +42,12 @@ export class Anchor {
             markerParameters.markersAreaEnabled
         );
 
-        var markerRoot = new THREE.Group();
-        scene.add(markerRoot);
+        this.markerRoot = new THREE.Group();
+        scene.add(this.markerRoot);
         var controlledObject;
         // set controlledObject depending on changeMatrixMode
         if (markerParameters.changeMatrixMode === "modelViewMatrix") {
-            controlledObject = markerRoot;
+            controlledObject = this.markerRoot;
         } else if (markerParameters.changeMatrixMode === "cameraTransformMatrix") {
             controlledObject = camera;
         } else console.assert(false);
@@ -56,8 +59,7 @@ export class Anchor {
                 markerParameters
             );
             this.controls = markerControls;
-            console.log(this.controls);
-            
+
         } else {
             // sanity check - MUST be a trackingBackend with markers
             console.assert(arContext.parameters.trackingBackend === "artoolkit");
@@ -102,25 +104,24 @@ export class Anchor {
             } else console.assert(false);
 
             // build a multiMarkerControls
-            var multiMarkerControls = {} as IArMarkerAreaControls
-            multiMarkerControls = MarkersAreaControls.fromJSON(
+            this.multiMarkerControls = {} as IArMarkerAreaControls
+            this.multiMarkerControls = MarkersAreaControls.fromJSON(
                 arContext,
                 parent3D,
                 controlledObject,
                 multiMarkerFile
             );
-            this.controls = multiMarkerControls;
+            this.controls = this.multiMarkerControls;
 
             // honor markerParameters.changeMatrixMode
-            multiMarkerControls.parameters.changeMatrixMode =
+            this.multiMarkerControls.parameters.changeMatrixMode =
                 markerParameters.changeMatrixMode;
 
             // TODO put subMarkerControls visibility into an external file. with 2 handling for three.js and babylon.js
             // create ArMarkerHelper - useful to debug - super three.js specific
             var markerHelpers: any[] = [];
-            console.log(multiMarkerControls);
-            
-            multiMarkerControls.subMarkersControls.forEach(function (
+
+            this.multiMarkerControls.subMarkersControls.forEach(function (
                 subMarkerControls: any
             ) {
                 // add an helper to visuable each sub-marker
@@ -152,32 +153,28 @@ export class Anchor {
             // build a smoothedControls
             var smoothedRoot = new THREE.Group();
             scene.add(smoothedRoot);
-            var smoothedControls = new ArSmoothedControls(smoothedRoot);
+            this.smoothedControls = new ArSmoothedControls(smoothedRoot);
             smoothedRoot.add(this.object3d);
         } else {
-            markerRoot.add(this.object3d);
+            this.markerRoot.add(this.object3d);
         }
-
-        //////////////////////////////////////////////////////////////////////////////
-        //		Code Separator
-        //////////////////////////////////////////////////////////////////////////////
-        /*this.update = function () {
-            // update _this.object3d.visible
-            _this.object3d.visible = _this.object3d.parent.visible;
-
-            // console.log('controlledObject.visible', _this.object3d.parent.visible)
-            if (smoothedControls !== undefined) {
-                // update smoothedControls parameters depending on how many markers are visible in multiMarkerControls
-                if (multiMarkerControls !== undefined) {
-                    multiMarkerControls.updateSmoothedControls(smoothedControls);
-                }
-
-                // update smoothedControls
-                smoothedControls.update(markerRoot);
-            }
-        };*/
     }
 
+    update() {
+        // update _this.object3d.visible
+        this.object3d.visible = this.object3d.parent.visible;
+
+        // console.log('controlledObject.visible', _this.object3d.parent.visible)
+        if (this.smoothedControls !== undefined) {
+            // update smoothedControls parameters depending on how many markers are visible in multiMarkerControls
+            if (this.multiMarkerControls !== undefined) {
+                this.multiMarkerControls.updateSmoothedControls(this.smoothedControls);
+            }
+
+            // update smoothedControls
+            this.smoothedControls.update(this.markerRoot);
+        }
+    }
 };
 
 export default Anchor;
