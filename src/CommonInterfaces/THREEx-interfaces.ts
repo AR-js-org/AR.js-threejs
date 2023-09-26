@@ -16,7 +16,7 @@ export interface IArSmoothedControls {
     update(targetObject3d: any): void;
 }
 
-export interface IArToolkitContext{
+export interface IArToolkitContext {
     parameters: IContextParameters;
     arController: any;
     _artoolkitProjectionAxisTransformMatrix: Matrix4
@@ -69,6 +69,7 @@ export interface IArMarkerControlsParameters {
     descriptorsUrl?: string;
     changeMatrixMode?: string;
     minConfidence?: number;
+    poseMatrix?: Array<number>;
     smooth?: boolean;
     smoothCount?: number;
     smoothTolerance?: number;
@@ -106,7 +107,7 @@ export interface ISourceParameters {
     displayHeight?: number
 }
 
-export interface ISmoothedControlsParameters { 
+export interface ISmoothedControlsParameters {
     lerpPosition: number,
     lerpQuaternion: number,
     lerpScale: number,
@@ -123,7 +124,7 @@ export interface IUserMediaConstraints {
             max?: number,
             ideal: number
         },
-        height:  {
+        height: {
             min?: number,
             max?: number,
             ideal: number
@@ -136,14 +137,26 @@ export interface IUserMediaConstraints {
 
 }
 
-export interface IArMarkerAreaControlsParameters{
-    subMarkersControls: IArMarkerControls[],
+export interface IArMarkerAreaControlsParameters {
+    subMarkersControls: ISubMarkerControls[],
     subMarkerPoses: Matrix4[],
     changeMatrixMode: string
 }
 
-export interface IArMarkerAreaControls{
+export interface IArMarkerAreaControls {
     parameters: IArMarkerAreaControlsParameters;
-    subMarkersControls: IArMarkerControls[];
+    subMarkersControls: ISubMarkerControls[];
     updateSmoothedControls(smooth: any, lerps?: any): void;
+}
+
+export interface ISubMarkerControls {
+    parameters: ISubMarkerControlsParameters,
+    poseMatrix?: Array<number>,
+    object3d?: Object3D,
+    dispose(): void,
+}
+
+export interface ISubMarkerControlsParameters {
+    type?: string,
+    patternUrl?: string,
 }

@@ -1,7 +1,7 @@
 import { Box3, Matrix4, Object3D, Quaternion, Vector3 } from "three";
 import { ArBaseControls } from "../ArBaseControls";
 import { ArMarkerControls } from "../ArMarkerControls";
-import { IArMarkerControls, IArMarkerAreaControlsParameters } from "../CommonInterfaces/THREEx-interfaces";
+import { IArMarkerControls, IArToolkitContext, IArMarkerAreaControlsParameters, IArMarkerAreaControls, ISubMarkerControls } from "../CommonInterfaces/THREEx-interfaces";
 /**
  * @class {MarkersAreaControls}
  * @param {*} arToolkitContext 
@@ -10,15 +10,17 @@ import { IArMarkerControls, IArMarkerAreaControlsParameters } from "../CommonInt
  */
 
 export class MarkersAreaControls extends ArBaseControls {
-  public subMarkersControls: IArMarkerControls[];
-  public subMarkerPoses: THREE.Matrix4[];
+  public subMarkersControls: ISubMarkerControls[];
+  public subMarkerPoses: Matrix4[];
   public parameters: IArMarkerAreaControlsParameters;
+  //static parameters: IArMarkerAreaControlsParameters;
   //public object3d: any;
-  constructor(arToolkitContext: any, object3d: Object3D, parameters: any) {
+  constructor(arToolkitContext: IArToolkitContext, object3d: Object3D, parameters: IArMarkerAreaControlsParameters) {
     super(object3d)
     var _this = this;
 
-    this.parameters = {} as IArMarkerAreaControlsParameters;
+    //MarkersAreaControls.parameters: any;// = any;
+    this.parameters = parameters;
 
     if (arguments.length > 3)
       //console.assert("wrong api for", MarkersAreaControls);
@@ -35,11 +37,16 @@ export class MarkersAreaControls extends ArBaseControls {
             ? parameters.changeMatrixMode
             : "modelViewMatrix",
       };
-
+      console.log("parameters:", parameters);
+      console.log(this.parameters);
+    
     this.object3d.visible = false;
     // honor obsolete stuff - add a warning to use
     this.subMarkersControls = this.parameters.subMarkersControls;
     this.subMarkerPoses = this.parameters.subMarkerPoses;
+
+    console.log(this.subMarkersControls);
+    
 
     // listen to arToolkitContext event 'sourceProcessed'
     // - after we fully processed one image, aka when we know all detected poses in it
@@ -74,7 +81,7 @@ export class MarkersAreaControls extends ArBaseControls {
     };
 
     var firstQuaternion =
-      _this.parameters.subMarkersControls[0].object3d.quaternion;
+    this.parameters.subMarkersControls[0].object3d.quaternion;
 
     this.parameters.subMarkersControls.forEach(function (
       markerControls: any,
@@ -358,28 +365,43 @@ export class MarkersAreaControls extends ArBaseControls {
     arToolkitContext: any,
     parent3D: any,
     markerRoot: any,
-    jsonData: any,
-    parameters?: any
+    jsonData: string,
+    parameters?: IArMarkerAreaControlsParameters
   ) {
     var multiMarkerFile = JSON.parse(jsonData);
     // declare variables
-    var subMarkersControls: any = [];
-    var subMarkerPoses: any = [];
+    var subMarkersControls: ISubMarkerControls[] = [];
+    var subMarkerPoses: Matrix4[] = [] ;
     // handle default arguments
-    parameters = parameters || {};
+    var _parameters =  {} as IArMarkerAreaControlsParameters;
+    
+    if (parameters === undefined){
+      parameters = {} as IArMarkerAreaControlsParameters;
+    }
+    _parameters = parameters;
+    //this.parameters = parameters
+    console.log(_parameters);
+    
+
+    console.log(multiMarkerFile)
 
     // prepare the parameters
-    multiMarkerFile.subMarkersControls.forEach(function (item: any) {
+    multiMarkerFile.subMarkersControls.forEach(function (item: ISubMarkerControls) {
       // create a markerRoot
       var markerRoot = new Object3D();
       parent3D.add(markerRoot);
 
+      console.log("item", item);
+      
+
       // create markerControls for our markerRoot
-      var subMarkerControls = new ArMarkerControls(
+      var subMarkerControls: ISubMarkerControls = new ArMarkerControls(
         arToolkitContext,
         markerRoot,
         item.parameters
       );
+
+      console.log("subMarkerControls", subMarkerControls);
 
       // if( true ){
       // store it in the parameters
@@ -406,17 +428,28 @@ export class MarkersAreaControls extends ArBaseControls {
       // 		subMarkerPoses.push(new THREE.Matrix4().fromArray(item.poseMatrix))
       // }
     });
+    console.log(subMarkersControls);
+    console.log(_parameters);
+    console.log(_parameters.subMarkersControls);
+    
+    
 
-    parameters.subMarkersControls = subMarkersControls;
+    //_parameters.subMarkersControls = subMarkersControls;
+    _parameters.subMarkersControls = subMarkersControls;
+    _parameters.changeMatrixMode = "modelViewMatrix"
+    console.log(_parameters);
+    
     parameters.subMarkerPoses = subMarkerPoses;
     // create a new ArMultiMarkerControls
-    var multiMarkerControls = new MarkersAreaControls(
+    var multiMarkerControls: any = new MarkersAreaControls(
       arToolkitContext,
       markerRoot,
-      parameters
+     _parameters
     );
 
     // return it
+    console.log("multiMarkersControls fromJson: ", multiMarkerControls);
+    
     return multiMarkerControls;
   };
 }

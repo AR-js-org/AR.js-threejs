@@ -3,7 +3,7 @@ export declare class Anchor {
     private parameters;
     private controls;
     private markersArea;
-    private object3d;
+    private readonly object3d;
     private smoothedControls;
     private multiMarkerControls;
     private markerRoot;

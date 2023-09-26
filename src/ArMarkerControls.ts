@@ -17,7 +17,7 @@ declare global {
  */
 export class ArMarkerControls extends ArBaseControls implements IArMarkerControls {
     private context: IArToolkitContext;
-    private parameters: IArMarkerControlsParameters;
+    public parameters: IArMarkerControlsParameters;
     private smoothMatrices: any[];
     private onGetMarker: Function;
     private className: string;

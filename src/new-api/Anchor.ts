@@ -4,7 +4,7 @@ import { ArMarkerHelper } from "../ArMarkerHelper";
 import { ArSmoothedControls } from "../ArSmoothedControls";
 import { MarkersAreaControls } from "../markers-area/arjs-markersareacontrols";
 import { MarkersAreaUtils } from "../markers-area/arjs-markersareautils";
-import { IArMarkerAreaControls, IArMarkerAreaControlsParameters, IArMarkerControls, IArSmoothedControls } from "../CommonInterfaces/THREEx-interfaces";
+import { IArMarkerAreaControls, IArMarkerAreaControlsParameters, IArMarkerControls, IArSmoothedControls, ISubMarkerControls } from "../CommonInterfaces/THREEx-interfaces";
 
 // TODO this is a controls... should i give the object3d here ?
 // not according to 'no three.js dependancy'
@@ -20,7 +20,7 @@ export class Anchor {
     private parameters: any;
     private controls: any;
     private markersArea: any;
-    private object3d: Object3D;
+    private readonly object3d: Object3D;
     private smoothedControls: IArSmoothedControls;
     private multiMarkerControls: IArMarkerAreaControls;
     private markerRoot: Group;
@@ -63,6 +63,8 @@ export class Anchor {
         } else {
             // sanity check - MUST be a trackingBackend with markers
             console.assert(arContext.parameters.trackingBackend === "artoolkit");
+            console.log(arContext.parameters.trackingBackend);
+            
 
             // honor markers-page-resolution for https://webxr.io/augmented-website
             if (
@@ -95,6 +97,8 @@ export class Anchor {
             // get multiMarkerFile from localStorage
             console.assert(localStorage.getItem("ARjsMultiMarkerFile") !== null);
             var multiMarkerFile = localStorage.getItem("ARjsMultiMarkerFile");
+            console.log(multiMarkerFile);
+            
 
             // set controlledObject depending on changeMatrixMode
             if (markerParameters.changeMatrixMode === "modelViewMatrix") {
@@ -113,19 +117,29 @@ export class Anchor {
             );
             this.controls = this.multiMarkerControls;
 
+            console.log( this.multiMarkerControls);
+            
+
             // honor markerParameters.changeMatrixMode
             this.multiMarkerControls.parameters.changeMatrixMode =
                 markerParameters.changeMatrixMode;
+            console.log(this.multiMarkerControls.parameters);
+            
+            this.multiMarkerControls.parameters.subMarkersControls =  markerParameters.subMarkersControls;
+            this.multiMarkerControls.subMarkersControls  =  markerParameters.subMarkersControls;
 
             // TODO put subMarkerControls visibility into an external file. with 2 handling for three.js and babylon.js
             // create ArMarkerHelper - useful to debug - super three.js specific
             var markerHelpers: any[] = [];
-
-            this.multiMarkerControls.subMarkersControls.forEach(function (
-                subMarkerControls: any
-            ) {
+            
+            console.log(this.multiMarkerControls);
+            console.log(this.multiMarkerControls.subMarkersControls);
+            
+            this.multiMarkerControls.subMarkersControls.forEach( (
+                subMarkerControls: ISubMarkerControls, index: number, array: ISubMarkerControls[]
+            ) => {
                 // add an helper to visuable each sub-marker
-                var markerHelper = new ArMarkerHelper(subMarkerControls);
+                var markerHelper = new ArMarkerHelper(subMarkerControls as ArMarkerControls);
                 markerHelper.object3d.visible = false;
                 // subMarkerControls.object3d.add( markerHelper.object3d )
                 subMarkerControls.object3d.add(markerHelper.object3d);

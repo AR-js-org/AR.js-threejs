@@ -6,7 +6,7 @@ declare global {
 }
 export declare class ArMarkerControls extends ArBaseControls implements IArMarkerControls {
     private context;
-    private parameters;
+    parameters: IArMarkerControlsParameters;
     private smoothMatrices;
     private onGetMarker;
     private className;

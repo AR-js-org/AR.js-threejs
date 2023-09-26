@@ -63,6 +63,7 @@ export interface IArMarkerControlsParameters {
     descriptorsUrl?: string;
     changeMatrixMode?: string;
     minConfidence?: number;
+    poseMatrix?: Array<number>;
     smooth?: boolean;
     smoothCount?: number;
     smoothTolerance?: number;
@@ -124,12 +125,22 @@ export interface IUserMediaConstraints {
     };
 }
 export interface IArMarkerAreaControlsParameters {
-    subMarkersControls: IArMarkerControls[];
+    subMarkersControls: ISubMarkerControls[];
     subMarkerPoses: Matrix4[];
     changeMatrixMode: string;
 }
 export interface IArMarkerAreaControls {
     parameters: IArMarkerAreaControlsParameters;
-    subMarkersControls: IArMarkerControls[];
+    subMarkersControls: ISubMarkerControls[];
     updateSmoothedControls(smooth: any, lerps?: any): void;
+}
+export interface ISubMarkerControls {
+    parameters: ISubMarkerControlsParameters;
+    poseMatrix?: Array<number>;
+    object3d?: Object3D;
+    dispose(): void;
+}
+export interface ISubMarkerControlsParameters {
+    type?: string;
+    patternUrl?: string;
 }

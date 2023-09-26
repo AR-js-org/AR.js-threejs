@@ -6,8 +6,8 @@ export abstract class ArBaseControls extends EventDispatcher implements IArBaseC
     public id: number;
     protected object3d: Object3D;
     /**
-     * THe ArBaseControls constructor, you need to pass a Theee.js Object3d to it.
-     * @param object3d the Threejs Object3D to pass.
+     * THe ArBaseControls constructor, you need to pass a Three.js Object3D to it.
+     * @param object3d the Three.js Object3D to pass.
      */
     constructor(object3d: Object3D) {
         super()

@@ -1,11 +1,11 @@
 import { Box3, Matrix4, Object3D } from "three";
 import { ArBaseControls } from "../ArBaseControls";
-import { IArMarkerControls, IArMarkerAreaControlsParameters } from "../CommonInterfaces/THREEx-interfaces";
+import { IArToolkitContext, IArMarkerAreaControlsParameters, ISubMarkerControls } from "../CommonInterfaces/THREEx-interfaces";
 export declare class MarkersAreaControls extends ArBaseControls {
-    subMarkersControls: IArMarkerControls[];
-    subMarkerPoses: THREE.Matrix4[];
+    subMarkersControls: ISubMarkerControls[];
+    subMarkerPoses: Matrix4[];
     parameters: IArMarkerAreaControlsParameters;
-    constructor(arToolkitContext: any, object3d: Object3D, parameters: any);
+    constructor(arToolkitContext: IArToolkitContext, object3d: Object3D, parameters: IArMarkerAreaControlsParameters);
     _onSourceProcessed(): void;
     update(): void;
     name(): string;
@@ -14,5 +14,5 @@ export declare class MarkersAreaControls extends ArBaseControls {
     static computeCenter(jsonData: any): Matrix4;
     static computeBoundingBox(jsonData: any): Box3;
     updateSmoothedControls(smoothedControls: any, lerpsValues: any): void;
-    static fromJSON(arToolkitContext: any, parent3D: any, markerRoot: any, jsonData: any, parameters?: any): MarkersAreaControls;
+    static fromJSON(arToolkitContext: any, parent3D: any, markerRoot: any, jsonData: string, parameters?: IArMarkerAreaControlsParameters): any;
 }
