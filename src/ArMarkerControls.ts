@@ -17,10 +17,11 @@ declare global {
  */
 export class ArMarkerControls extends ArBaseControls implements IArMarkerControls {
     private context: IArToolkitContext;
-    private parameters: IArMarkerControlsParameters;
+    public parameters: IArMarkerControlsParameters;
     private smoothMatrices: any[];
     private onGetMarker: Function;
     private className: string;
+    declare public object3d: Object3D;
 
     /**
      * ArMarkerControls constructor, needs context, object3d and a bunch of parameters.
@@ -219,6 +220,11 @@ export class ArMarkerControls extends ArBaseControls implements IArMarkerControl
 
         return renderReqd;
     };
+
+
+    update(object3d: Object3D) {
+        console.log("update not required", object3d)
+    }
 
     //////////////////////////////////////////////////////////////////////////////
     //		utility functions

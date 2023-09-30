@@ -21,6 +21,10 @@ export class ArToolkitProfile implements IArToolkitProfile {
      * @constructor
      */
     constructor() {
+        this.sourceParameters = {} as ISourceParameters;
+        this.contextParameters = {} as IContextParameters;
+        this.defaultMarkerParameters = {} as IDefaultMarkerParameters;
+
         this.reset()
 
         this.performance('default')
@@ -35,6 +39,7 @@ export class ArToolkitProfile implements IArToolkitProfile {
 
         this.contextParameters.cameraParametersUrl = ArToolkitContext.baseURL + '../data/data/camera_para.dat';
         this.contextParameters.detectionMode = 'mono';
+        this.contextParameters.trackingBackend = 'artoolkit';
 
         this.defaultMarkerParameters.type = 'pattern';
         this.defaultMarkerParameters.patternUrl = ArToolkitContext.baseURL + '../data/data/patt.hiro';
@@ -86,10 +91,10 @@ export class ArToolkitProfile implements IArToolkitProfile {
      * @param trackingBackend 
      * @returns this
      */
-    defaultMarker(trackingBackend: string): this {
-        this.trackingBackend(trackingBackend || this.contextParameters.trackingBackend);
+    defaultMarker(trackingBackend?: string): this {
+        var _trackingBackend = trackingBackend || this.contextParameters.trackingBackend;
 
-        if (trackingBackend === 'artoolkit') {
+        if (_trackingBackend === 'artoolkit') {
             this.contextParameters.detectionMode = 'mono'
             this.defaultMarkerParameters.type = 'pattern'
             this.defaultMarkerParameters.patternUrl = ArToolkitContext.baseURL + '../data/data/patt.hiro'

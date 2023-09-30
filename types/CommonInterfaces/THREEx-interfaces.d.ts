@@ -1,12 +1,16 @@
-import { Renderer, Camera, Matrix4 } from "three";
+import { Renderer, Camera, Matrix4, Object3D } from "three";
 export interface IArBaseControls {
-    update(): void;
+    update(object3d: Object3D): void;
     name(): string;
 }
 export interface IArMarkerControls {
     dispose(): void;
     updateWithModelViewMatrix(modelViewMatrix: Matrix4): boolean;
     name(): string;
+}
+export interface IArSmoothedControls {
+    parameters: ISmoothedControlsParameters;
+    update(targetObject3d: any): void;
 }
 export interface IArToolkitContext {
     parameters: IContextParameters;
@@ -58,6 +62,7 @@ export interface IArMarkerControlsParameters {
     descriptorsUrl?: string;
     changeMatrixMode?: string;
     minConfidence?: number;
+    poseMatrix?: Array<number>;
     smooth?: boolean;
     smoothCount?: number;
     smoothTolerance?: number;
@@ -82,8 +87,16 @@ export interface IDefaultMarkerParameters {
     changeMatrixMode: string;
     markersAreaEnabled: boolean;
 }
+export interface ISmoothedControlsParameters {
+    lerpPosition: number;
+    lerpQuaternion: number;
+    lerpScale: number;
+    lerpStepDelay: number;
+    minVisibleDelay: number;
+    minUnvisibleDelay: number;
+}
 export interface ISourceParameters {
-    sourceType: string;
+    sourceType?: string;
     sourceUrl?: string;
     deviceId?: string;
     sourceWidth: number;

@@ -1,4 +1,4 @@
-import { EventDispatcher, EventListener, Camera, Matrix4 } from 'three'
+import { EventDispatcher, EventListener, PerspectiveCamera, Matrix4 } from 'three'
 import { IArToolkitContext, IContextParameters } from './CommonInterfaces/THREEx-interfaces';
 import { ArMarkerControls } from "./ArMarkerControls";
 import { setParameters } from './common-functions/utilityFunctions';
@@ -127,7 +127,7 @@ export class ArToolkitContext implements IArToolkitContext {
         // Create a camera
         let camera;
         if (trackingBackend === 'artoolkit') {
-            camera = new Camera();
+            camera = new PerspectiveCamera();
         } else console.assert(false);
         return camera
     }
