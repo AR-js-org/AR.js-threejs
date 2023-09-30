@@ -1,10 +1,10 @@
 import { EventDispatcher, Object3D } from "three";
 import { IArBaseControls } from "./CommonInterfaces/THREEx-interfaces";
-export declare class ArBaseControls extends EventDispatcher implements IArBaseControls {
+export declare abstract class ArBaseControls extends EventDispatcher implements IArBaseControls {
     static _id: number;
-    private id;
+    id: number;
     protected object3d: Object3D;
     constructor(object3d: Object3D);
-    update(): void;
-    name(): string;
+    abstract update(object3d: Object3D): void;
+    abstract name(): string;
 }

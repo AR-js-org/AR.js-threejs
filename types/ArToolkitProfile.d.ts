@@ -9,7 +9,7 @@ export declare class ArToolkitProfile implements IArToolkitProfile {
     constructor();
     reset(): this;
     performance(label: string): this;
-    defaultMarker(trackingBackend: string): this;
+    defaultMarker(trackingBackend?: string): this;
     sourceWebcam(): this;
     sourceVideo(url: string): this;
     sourceImage(url: string): this;
