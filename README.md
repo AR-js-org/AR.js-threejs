@@ -25,4 +25,4 @@ The module export two namespaces as in the old implementation: **THREEx** and **
 - [x] Utils
 
 ## Examples
-For now, you can find one **example** in vanilla JS and another one in Typescript in the **example-ts** folder. More examples will be added in a near future.
+For now, you can find two vanilla JS examples in the **examples** folder and another one in Typescript in the **example-ts** folder. More examples will be added in a near future.
