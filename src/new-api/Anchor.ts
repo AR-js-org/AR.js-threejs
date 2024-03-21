@@ -114,8 +114,14 @@ export class Anchor {
                 parent3D,
                 controlledObject,
                 multiMarkerFile
+            );*/
+            var markerControls = new ArMarkerControls(
+                arContext,
+                controlledObject,
+                markerParameters
             );
-            this.controls = this.multiMarkerControls;
+            this.controls = markerControls;
+            /*this.controls = this.multiMarkerControls;
 
             console.log( this.multiMarkerControls);
             
