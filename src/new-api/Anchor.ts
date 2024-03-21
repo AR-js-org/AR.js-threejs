@@ -2,8 +2,8 @@ import { Group, Object3D } from "three";
 import { ArMarkerControls } from "../ArMarkerControls"; // Alias for dynamic importing
 import { ArMarkerHelper } from "../ArMarkerHelper";
 import { ArSmoothedControls } from "../ArSmoothedControls";
-import { MarkersAreaControls } from "../markers-area/arjs-markersareacontrols";
-import { MarkersAreaUtils } from "../markers-area/arjs-markersareautils";
+//import { MarkersAreaControls } from "../markers-area/arjs-markersareacontrols";
+//import { MarkersAreaUtils } from "../markers-area/arjs-markersareautils";
 import { IArMarkerAreaControls, IArMarkerAreaControlsParameters, IArMarkerControls, IArSmoothedControls, ISubMarkerControls } from "../CommonInterfaces/THREEx-interfaces";
 
 // TODO this is a controls... should i give the object3d here ?
@@ -80,15 +80,15 @@ export class Anchor {
                 var resolutionH = parseInt(matches[2]);
                 var arContext = arSession.arContext;
                 // generate and store the ARjsMultiMarkerFile
-                MarkersAreaUtils.storeMarkersAreaFileFromResolution(
+                /*MarkersAreaUtils.storeMarkersAreaFileFromResolution(
                     arContext.parameters.trackingBackend,
                     resolutionW,
                     resolutionH
-                );
+                );*/
             }
 
             // if there is no ARjsMultiMarkerFile, build a default one
-            if (localStorage.getItem("ARjsMultiMarkerFile") === null) {
+            /*if (localStorage.getItem("ARjsMultiMarkerFile") === null) {
                 MarkersAreaUtils.storeDefaultMultiMarkerFile(
                     arContext.parameters.trackingBackend
                 );
@@ -97,7 +97,7 @@ export class Anchor {
             // get multiMarkerFile from localStorage
             console.assert(localStorage.getItem("ARjsMultiMarkerFile") !== null);
             var multiMarkerFile = localStorage.getItem("ARjsMultiMarkerFile");
-            console.log(multiMarkerFile);
+            console.log(multiMarkerFile);*/
             
 
             // set controlledObject depending on changeMatrixMode
@@ -108,7 +108,7 @@ export class Anchor {
             } else console.assert(false);
 
             // build a multiMarkerControls
-            this.multiMarkerControls = {} as IArMarkerAreaControls
+            /*this.multiMarkerControls = {} as IArMarkerAreaControls
             this.multiMarkerControls = MarkersAreaControls.fromJSON(
                 arContext,
                 parent3D,
@@ -152,7 +152,7 @@ export class Anchor {
                 markerHelpers.forEach(function (markerHelper) {
                     markerHelper.object3d.visible = visible;
                 });
-            };
+            };*/
         }
 
         this.object3d = new Group();
@@ -181,9 +181,9 @@ export class Anchor {
         // console.log('controlledObject.visible', _this.object3d.parent.visible)
         if (this.smoothedControls !== undefined) {
             // update smoothedControls parameters depending on how many markers are visible in multiMarkerControls
-            if (this.multiMarkerControls !== undefined) {
+            /*if (this.multiMarkerControls !== undefined) {
                 this.multiMarkerControls.updateSmoothedControls(this.smoothedControls);
-            }
+            }*/
 
             // update smoothedControls
             this.smoothedControls.update(this.markerRoot);
