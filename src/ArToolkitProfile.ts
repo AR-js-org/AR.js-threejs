@@ -97,7 +97,7 @@ export class ArToolkitProfile implements IArToolkitProfile {
         if (_trackingBackend === 'artoolkit') {
             this.contextParameters.detectionMode = 'mono'
             this.defaultMarkerParameters.type = 'pattern'
-            this.defaultMarkerParameters.patternUrl = ArToolkitContext.baseURL + '../data/data/patt.hiro'
+            this.defaultMarkerParameters.patternUrl = ArToolkitContext.baseURL + '../data/patt.hiro'
         } else console.assert(false)
 
         return this
