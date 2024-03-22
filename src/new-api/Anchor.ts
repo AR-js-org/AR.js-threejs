@@ -1,10 +1,7 @@
 import { Group, Object3D } from "three";
-import { ArMarkerControls } from "../ArMarkerControls"; // Alias for dynamic importing
-import { ArMarkerHelper } from "../ArMarkerHelper";
+import { ArMarkerControls } from "../ArMarkerControls";
 import { ArSmoothedControls } from "../ArSmoothedControls";
-//import { MarkersAreaControls } from "../markers-area/arjs-markersareacontrols";
-//import { MarkersAreaUtils } from "../markers-area/arjs-markersareautils";
-import { IArMarkerAreaControls, IArMarkerAreaControlsParameters, IArMarkerControls, IArSmoothedControls, ISubMarkerControls } from "../CommonInterfaces/THREEx-interfaces";
+import { IArSmoothedControls } from "../CommonInterfaces/THREEx-interfaces";
 
 // TODO this is a controls... should i give the object3d here ?
 // not according to 'no three.js dependancy'
@@ -19,10 +16,8 @@ export class Anchor {
     private arSession: any;
     private parameters: any;
     private controls: any;
-    private markersArea: any;
     private readonly object3d: Object3D;
     private smoothedControls: IArSmoothedControls;
-    private multiMarkerControls: IArMarkerAreaControls;
     private markerRoot: Group;
     constructor(arSession: any, markerParameters: any) {
         //var _this = this;
@@ -76,89 +71,27 @@ export class Anchor {
                     /markers-page-resolution=(\d+)x(\d+)/
                 );
                 console.assert(matches.length === 3);
-                var resolutionW = parseInt(matches[1]);
-                var resolutionH = parseInt(matches[2]);
+                //var resolutionW = parseInt(matches[1]);
+                //var resolutionH = parseInt(matches[2]);
                 var arContext = arSession.arContext;
-                // generate and store the ARjsMultiMarkerFile
-                /*MarkersAreaUtils.storeMarkersAreaFileFromResolution(
-                    arContext.parameters.trackingBackend,
-                    resolutionW,
-                    resolutionH
-                );*/
             }
-
-            // if there is no ARjsMultiMarkerFile, build a default one
-            /*if (localStorage.getItem("ARjsMultiMarkerFile") === null) {
-                MarkersAreaUtils.storeDefaultMultiMarkerFile(
-                    arContext.parameters.trackingBackend
-                );
-            }
-
-            // get multiMarkerFile from localStorage
-            console.assert(localStorage.getItem("ARjsMultiMarkerFile") !== null);
-            var multiMarkerFile = localStorage.getItem("ARjsMultiMarkerFile");
-            console.log(multiMarkerFile);*/
             
-
+            var parent3D;
             // set controlledObject depending on changeMatrixMode
             if (markerParameters.changeMatrixMode === "modelViewMatrix") {
-                var parent3D = scene;
+                parent3D = this.markerRoot;
             } else if (markerParameters.changeMatrixMode === "cameraTransformMatrix") {
-                var parent3D = camera;
+                parent3D = camera;
             } else console.assert(false);
 
             // build a multiMarkerControls
-            /*this.multiMarkerControls = {} as IArMarkerAreaControls
-            this.multiMarkerControls = MarkersAreaControls.fromJSON(
-                arContext,
-                parent3D,
-                controlledObject,
-                multiMarkerFile
-            );*/
+            
             var markerControls = new ArMarkerControls(
                 arContext,
-                controlledObject,
+                parent3D,
                 markerParameters
             );
             this.controls = markerControls;
-            /*this.controls = this.multiMarkerControls;
-
-            console.log( this.multiMarkerControls);
-            
-
-            // honor markerParameters.changeMatrixMode
-            this.multiMarkerControls.parameters.changeMatrixMode =
-                markerParameters.changeMatrixMode;
-            console.log(this.multiMarkerControls.parameters);
-            
-            this.multiMarkerControls.parameters.subMarkersControls =  markerParameters.subMarkersControls;
-            this.multiMarkerControls.subMarkersControls  =  markerParameters.subMarkersControls;
-
-            // TODO put subMarkerControls visibility into an external file. with 2 handling for three.js and babylon.js
-            // create ArMarkerHelper - useful to debug - super three.js specific
-            var markerHelpers: any[] = [];
-            
-            console.log(this.multiMarkerControls);
-            console.log(this.multiMarkerControls.subMarkersControls);
-            
-            this.multiMarkerControls.subMarkersControls.forEach( (
-                subMarkerControls: ISubMarkerControls, index: number, array: ISubMarkerControls[]
-            ) => {
-                // add an helper to visuable each sub-marker
-                var markerHelper = new ArMarkerHelper(subMarkerControls as ArMarkerControls);
-                markerHelper.object3d.visible = false;
-                // subMarkerControls.object3d.add( markerHelper.object3d )
-                subMarkerControls.object3d.add(markerHelper.object3d);
-                // add it to markerHelpers
-                markerHelpers.push(markerHelper);
-            });
-            // define API specific to markersArea
-            this.markersArea = {};
-            this.markersArea.setSubMarkersVisibility = function (visible: boolean) {
-                markerHelpers.forEach(function (markerHelper) {
-                    markerHelper.object3d.visible = visible;
-                });
-            };*/
         }
 
         this.object3d = new Group();
@@ -184,12 +117,7 @@ export class Anchor {
         // update _this.object3d.visible
         this.object3d.visible = this.object3d.parent.visible;
 
-        // console.log('controlledObject.visible', _this.object3d.parent.visible)
         if (this.smoothedControls !== undefined) {
-            // update smoothedControls parameters depending on how many markers are visible in multiMarkerControls
-            /*if (this.multiMarkerControls !== undefined) {
-                this.multiMarkerControls.updateSmoothedControls(this.smoothedControls);
-            }*/
 
             // update smoothedControls
             this.smoothedControls.update(this.markerRoot);
