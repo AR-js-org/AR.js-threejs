@@ -1,4 +1,3 @@
-//import { MarkersAreaUtils } from "../markers-area/arjs-markersareautils";
 import { Context } from "../Context"; // TODO context build-dependent
 
 /**
@@ -96,7 +95,6 @@ export class AnchorDebugUI  {
         var subMarkerHelpersVisible = false;
         buttonDomElement.addEventListener("click", function () {
             subMarkerHelpersVisible = subMarkerHelpersVisible ? false : true;
-            //arAnchor.markersArea.setSubMarkersVisibility(subMarkerHelpersVisible);
         });
     }
 
@@ -120,7 +118,6 @@ export class AnchorDebugUI  {
                 var learnerURL: any =
                     Context.baseURL + "examples/multi-markers/examples/learner.html";
             }
-            //MarkersAreaUtils.navigateToLearnerPage(learnerURL, trackingBackend);
         });
     }
 
@@ -138,7 +135,6 @@ export class AnchorDebugUI  {
         //button3domElement.href = "javascript:void(0)";
 
         button3domElement.addEventListener("click", function () {
-            //MarkersAreaUtils.storeDefaultMultiMarkerFile(trackingBackend);
             location.reload();
         });
     }
@@ -150,4 +146,3 @@ export class AnchorDebugUI  {
  */
 static MarkersAreaLearnerURL: any = null;
 }
-//export { SessionDebugUI, AnchorDebugUI };
