@@ -173,8 +173,8 @@ export class ArMarkerCloak {
             opacity: 0.5,
             side: THREE.DoubleSide,
         });
-        var geometry = new THREE.PlaneGeometry(1, 1);
-        var orthoMesh = new THREE.Mesh(geometry, material);
+        var ortoGeometry = new THREE.PlaneGeometry(1, 1);
+        var orthoMesh = new THREE.Mesh(ortoGeometry, material);
         this.orthoMesh = orthoMesh;
         //return;
     }

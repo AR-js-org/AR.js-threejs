@@ -11,13 +11,13 @@ import { HitTestingPlane as _HitTestingPlane } from "./HitTestingPlane";
 import { Context as _Context } from "./Context";
 import { Profile as _Profile } from "./Profile";
 import { Source as _Source } from "./Source";
-
 import { Anchor as _Anchor } from "./new-api/Anchor";
 import { Session as _Session } from "./new-api/Session";
 import { SessionDebugUI as _SessionDebugUI } from "./new-api/SessionDebugUI";
 import { AnchorDebugUI as _AnchorDebugUI } from "./new-api/SessionDebugUI";
 import { Utils as _Utils } from "./new-api/Utils";
 import { HitTesting as _HitTesting } from "./new-api/HitTesting";
+
 
 export namespace THREEx {
   export const ArClickability = _ArClickability;
@@ -34,6 +34,7 @@ export namespace THREEx {
 
 export namespace ARjs {
   export const Anchor = _Anchor;
+  export const Context = _Context;
   export const Profile = _Profile;
   export const Session = _Session;
   export const SessionDebugUI = _SessionDebugUI;

@@ -28,6 +28,7 @@ export declare namespace THREEx {
 }
 export declare namespace ARjs {
     const Anchor: typeof _Anchor;
+    const Context: typeof _ArToolkitContext;
     const Profile: typeof _ArToolkitProfile;
     const Session: typeof _Session;
     const SessionDebugUI: typeof _SessionDebugUI;

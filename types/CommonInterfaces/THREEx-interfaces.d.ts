@@ -13,6 +13,10 @@ export interface IArSmoothedControls {
     parameters: ISmoothedControlsParameters;
     update(targetObject3d: any): void;
 }
+export interface IArSmoothedControls {
+    parameters: ISmoothedControlsParameters;
+    update(targetObject3d: any): void;
+}
 export interface IArToolkitContext {
     parameters: IContextParameters;
     arController: any;
@@ -87,6 +91,14 @@ export interface IDefaultMarkerParameters {
     patternUrl: string;
     changeMatrixMode: string;
     markersAreaEnabled: boolean;
+}
+export interface ISmoothedControlsParameters {
+    lerpPosition: number;
+    lerpQuaternion: number;
+    lerpScale: number;
+    lerpStepDelay: number;
+    minVisibleDelay: number;
+    minUnvisibleDelay: number;
 }
 export interface ISourceParameters {
     sourceType?: string;

@@ -97,6 +97,15 @@ export interface IDefaultMarkerParameters {
     markersAreaEnabled: boolean
 }
 
+export interface ISmoothedControlsParameters {
+    lerpPosition: number,
+    lerpQuaternion: number,
+    lerpScale: number,
+    lerpStepDelay: number,
+    minVisibleDelay: number,
+    minUnvisibleDelay: number
+}
+
 export interface ISourceParameters {
     sourceType?: string,
     sourceUrl?: string,
