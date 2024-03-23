@@ -33,7 +33,7 @@ var scene = new THREE.Scene();
 //////////////////////////////////////////////////////////////////////////////////
 
 // Create a camera
-var camera = new THREE.Camera();
+var camera = new THREE.PerspectiveCamera();
 scene.add(camera);
 
 

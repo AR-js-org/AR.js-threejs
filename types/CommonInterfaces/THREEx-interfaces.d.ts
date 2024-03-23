@@ -7,6 +7,11 @@ export interface IArMarkerControls {
     dispose(): void;
     updateWithModelViewMatrix(modelViewMatrix: Matrix4): boolean;
     name(): string;
+    object3d: Object3D;
+}
+export interface IArSmoothedControls {
+    parameters: ISmoothedControlsParameters;
+    update(targetObject3d: any): void;
 }
 export interface IArSmoothedControls {
     parameters: ISmoothedControlsParameters;
@@ -104,6 +109,14 @@ export interface ISourceParameters {
     displayWidth?: number;
     displayHeight?: number;
 }
+export interface ISmoothedControlsParameters {
+    lerpPosition: number;
+    lerpQuaternion: number;
+    lerpScale: number;
+    lerpStepDelay: number;
+    minVisibleDelay: number;
+    minUnvisibleDelay: number;
+}
 export interface IUserMediaConstraints {
     audio: boolean;
     video: {
@@ -122,4 +135,24 @@ export interface IUserMediaConstraints {
             exact: string;
         };
     };
+}
+export interface IArMarkerAreaControlsParameters {
+    subMarkersControls: ISubMarkerControls[];
+    subMarkerPoses: Matrix4[];
+    changeMatrixMode: string;
+}
+export interface IArMarkerAreaControls {
+    parameters: IArMarkerAreaControlsParameters;
+    subMarkersControls: ISubMarkerControls[];
+    updateSmoothedControls(smooth: any, lerps?: any): void;
+}
+export interface ISubMarkerControls {
+    parameters: ISubMarkerControlsParameters;
+    poseMatrix?: Array<number>;
+    object3d?: Object3D;
+    dispose(): void;
+}
+export interface ISubMarkerControlsParameters {
+    type?: string;
+    patternUrl?: string;
 }

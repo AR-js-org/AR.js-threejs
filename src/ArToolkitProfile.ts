@@ -37,12 +37,12 @@ export class ArToolkitProfile implements IArToolkitProfile {
     reset(): this {
         this.sourceParameters.sourceType = 'webcam'
 
-        this.contextParameters.cameraParametersUrl = ArToolkitContext.baseURL + '../data/data/camera_para.dat';
+        this.contextParameters.cameraParametersUrl = ArToolkitContext.baseURL + '../data/camera_para.dat';
         this.contextParameters.detectionMode = 'mono';
         this.contextParameters.trackingBackend = 'artoolkit';
 
         this.defaultMarkerParameters.type = 'pattern';
-        this.defaultMarkerParameters.patternUrl = ArToolkitContext.baseURL + '../data/data/patt.hiro';
+        this.defaultMarkerParameters.patternUrl = ArToolkitContext.baseURL + '../data/patt.hiro';
         this.defaultMarkerParameters.changeMatrixMode = 'modelViewMatrix';
 
         return this
@@ -97,7 +97,7 @@ export class ArToolkitProfile implements IArToolkitProfile {
         if (_trackingBackend === 'artoolkit') {
             this.contextParameters.detectionMode = 'mono'
             this.defaultMarkerParameters.type = 'pattern'
-            this.defaultMarkerParameters.patternUrl = ArToolkitContext.baseURL + '../data/data/patt.hiro'
+            this.defaultMarkerParameters.patternUrl = ArToolkitContext.baseURL + '../data/patt.hiro'
         } else console.assert(false)
 
         return this
