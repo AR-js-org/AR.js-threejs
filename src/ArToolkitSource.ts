@@ -254,7 +254,7 @@ export class ArToolkitSource implements IArToolkitSource {
 
   private _initSourceImage(onReady: any, onError: any): HTMLImageElement {
     // TODO make it static
-    var domElement = document.createElement("img") as HTMLImageElement;
+    var domElement = document.createElement("img") as unknown as HTMLImageElement;
     domElement.src = this.parameters.sourceUrl;
 
     domElement.width = this.parameters.sourceWidth;
@@ -268,7 +268,7 @@ export class ArToolkitSource implements IArToolkitSource {
 
   private _initSourceVideo(onReady: any, onError: any): HTMLVideoElement {
     // TODO make it static
-    var domElement = document.createElement("video") as HTMLVideoElement;
+    var domElement = document.createElement("video") as unknown as HTMLVideoElement;
     domElement.src = this.parameters.sourceUrl;
 
     domElement.style.objectFit = "initial";
@@ -313,7 +313,7 @@ export class ArToolkitSource implements IArToolkitSource {
         }, 1000);
       };
 
-    var domElement = document.createElement("video");
+    var domElement = document.createElement("video") as unknown as HTMLVideoElement;
     domElement.setAttribute("autoplay", "");
     domElement.setAttribute("muted", "");
     domElement.setAttribute("playsinline", "");
