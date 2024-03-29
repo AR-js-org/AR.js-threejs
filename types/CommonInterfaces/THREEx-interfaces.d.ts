@@ -13,10 +13,6 @@ export interface IArSmoothedControls {
     parameters: ISmoothedControlsParameters;
     update(targetObject3d: any): void;
 }
-export interface IArSmoothedControls {
-    parameters: ISmoothedControlsParameters;
-    update(targetObject3d: any): void;
-}
 export interface IArToolkitContext {
     parameters: IContextParameters;
     arController: any;

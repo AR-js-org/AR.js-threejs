@@ -18,7 +18,7 @@ export class ArMarkerHelper {
         // debugger
         // var text = markerControls.parameters.patternUrl.slice(-1).toUpperCase();
 
-        var canvas = document.createElement("canvas");
+        var canvas = document.createElement("canvas") as unknown as HTMLCanvasElement;
         canvas.width = 64;
         canvas.height = 64;
 
