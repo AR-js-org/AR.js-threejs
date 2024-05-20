@@ -56,6 +56,8 @@ sourceType: 'webcam',
 
 After, you need a bundler (webpack, rollup..) to build the final app. look at _example-ts_ for this purpose.
 
+Startup a server by running `npm start`
+
 ## Feature to add
 
 - [ ] NFT example
