@@ -13,10 +13,10 @@ export declare class ArToolkitContext implements IArToolkitContext {
     _artoolkitProjectionAxisTransformMatrix: any;
     private className;
     constructor(parameters: IContextParameters);
-    dispatchEvent: (event: any) => void;
-    addEventListener: <T extends any>(type: T, listener: EventListener<any, T, EventDispatcher<any>>) => void;
-    hasEventListener: <T extends any>(type: T, listener: EventListener<any, T, EventDispatcher<any>>) => boolean;
-    removeEventListener: <T extends any>(type: T, listener: EventListener<any, T, EventDispatcher<any>>) => void;
+    dispatchEvent: <T extends string>(event: any) => void;
+    addEventListener: <T extends string>(type: T, listener: EventListener<any, T, EventDispatcher<any>>) => void;
+    hasEventListener: <T extends string>(type: T, listener: EventListener<any, T, EventDispatcher<any>>) => boolean;
+    removeEventListener: <T extends string>(type: T, listener: EventListener<any, T, EventDispatcher<any>>) => void;
     static baseURL: string;
     static REVISION: string;
     createDefaultCamera(trackingBackend: string): PerspectiveCamera;
