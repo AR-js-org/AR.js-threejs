@@ -1,4 +1,4 @@
-import { Renderer, Camera, Matrix4, Object3D } from "three";
+import { Renderer, Camera, Matrix4, Object3D, EventListener, EventDispatcher } from "three";
 export interface IArBaseControls {
     update(object3d: Object3D): void;
     name(): string;
@@ -21,9 +21,9 @@ export interface IArToolkitContext {
     arController: any;
     _artoolkitProjectionAxisTransformMatrix: Matrix4
     dispatchEvent(event: any): void;
-    addEventListener<T extends any>(type: T, listener: THREE.EventListener<any, T, THREE.EventDispatcher<any>>): void;
-    hasEventListener<T extends any>(type: T, listener: THREE.EventListener<any, T, THREE.EventDispatcher<any>>): boolean;
-    removeEventListener<T extends any>(type: T, listener: THREE.EventListener<any, T, THREE.EventDispatcher<any>>): void;
+    addEventListener<T extends string>(type: T, listener: EventListener<any, T, EventDispatcher<any>>): void;
+    hasEventListener<T extends string>(type: T, listener: EventListener<any, T, EventDispatcher<any>>): boolean;
+    removeEventListener<T extends string>(type: T, listener: EventListener<any, T, EventDispatcher<any>>): void;
     createDefaultCamera(trackingBackend: string): void;
     init(onCompleted: Function): void;
     update(srcElement: HTMLImageElement | HTMLVideoElement): void;
