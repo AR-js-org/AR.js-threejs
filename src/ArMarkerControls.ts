@@ -1,5 +1,5 @@
 import { ArBaseControls } from "./ArBaseControls";
-import { Matrix4, Object3D } from "three";
+import { Matrix4, Matrix4Tuple, Object3D } from "three";
 import Worker from "worker-loader?inline=no-fallback!./Worker";
 import { setParameters } from "./common-functions/utilityFunctions";
 import { IArMarkerControls, IArMarkerControlsParameters, IArToolkitContext } from "./CommonInterfaces/THREEx-interfaces";
@@ -334,8 +334,8 @@ export class ArMarkerControls extends ArBaseControls implements IArMarkerControl
             });
         }
 
-        function setMatrix(matrix: Matrix4, value: { [x: string]: any; }) {
-            var array: any[] = [];
+        function setMatrix(matrix: Matrix4, value: { [x: string]: number; }) {
+            var array: number[] = [];
             for (var key in value) {
                 //@ts-ignore
                 array[key] = value[key];
@@ -345,7 +345,7 @@ export class ArMarkerControls extends ArBaseControls implements IArMarkerControl
                 //@ts-ignore
                 matrix.elements.set(array);
             } else {
-                matrix.elements = [].slice.call(array);
+                matrix.elements = [].slice.call(array) as Matrix4Tuple;
             }
         }
 
