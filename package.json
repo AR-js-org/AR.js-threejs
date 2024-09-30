@@ -27,7 +27,7 @@
   "homepage": "https://github.com/kalwalt/AR.js-threex#readme",
   "devDependencies": {
     "@types/node": "^18.15.11",
-    "@types/three": "^0.150.1",
+    "@types/three": "^0.168.0",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.3",
     "webpack": "^5.91.0",
@@ -36,6 +36,6 @@
   },
   "dependencies": {
     "@ar-js-org/artoolkit5-js": "^0.3.0",
-    "three": "^0.150.1"
+    "three": "^0.168.0"
   }
 }
