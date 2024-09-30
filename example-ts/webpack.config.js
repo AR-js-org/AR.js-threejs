@@ -37,14 +37,6 @@ module.exports = (env, argv) => {
                 extensions: [".tsx", ".ts", ".js"],
             },
             module,
-            externals: {
-                three: {
-                    commonjs: 'three',
-                    commonjs2: 'three',
-                    amd: 'three',
-                    root: 'THREE' // indicates global variable
-                }
-            }
         }
     ];
 };
