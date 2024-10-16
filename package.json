@@ -30,7 +30,7 @@
     "@types/three": "^0.150.1",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.3",
-    "webpack": "^5.91.0",
+    "webpack": "5.94.0",
     "webpack-cli": "^5.1.4",
     "worker-loader": "^3.0.8"
   },
