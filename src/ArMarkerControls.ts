@@ -349,7 +349,10 @@ export class ArMarkerControls extends ArBaseControls implements IArMarkerControl
             }
         }
 
-        function handleNFT(descriptorsUrl: any, arController: { canvas: { style: { clientWidth: string; clientHeight: string; }; width: number; height: number; getContext: (arg0: string) => any; }; cameraParam: any; }) {
+        function handleNFT(descriptorsUrl: any, arController: { canvas: { style: { clientWidth: string; clientHeight: string; }; width: number; height: number; getContext: (arg0: string, p: {
+                    willReadFrequently: boolean;
+                    alpha: boolean
+                }) => any; }; cameraParam: any; }) {
             var worker = new Worker();
 
             window.addEventListener("arjs-video-loaded", function (ev: any) {
@@ -371,7 +374,7 @@ export class ArMarkerControls extends ArBaseControls implements IArMarkerControl
                 arController.canvas.width = pw;
                 arController.canvas.height = ph;
 
-                var context_process = arController.canvas.getContext("2d");
+                var context_process = arController.canvas.getContext("2d", { alpha: false, willReadFrequently: true });
 
                 function process() {
                     context_process.fillStyle = "black";

@@ -10,8 +10,8 @@ import { ArVideoInWebgl as _ArVideoInWebgl } from "./ArVideoInWebgl";
 import { HitTestingPlane as _HitTestingPlane } from "./HitTestingPlane";
 import { Anchor as _Anchor } from "./new-api/Anchor";
 import { Session as _Session } from "./new-api/Session";
-import { SessionDebugUI as _SessionDebugUI } from "./new-api/SessionDebugUI";
-import { AnchorDebugUI as _AnchorDebugUI } from "./new-api/SessionDebugUI";
+import { SessionDebugUI as _SessionDebugUI } from "./new-api/DebugUI";
+import { AnchorDebugUI as _AnchorDebugUI } from "./new-api/DebugUI";
 import { Utils as _Utils } from "./new-api/Utils";
 import { HitTesting as _HitTesting } from "./new-api/HitTesting";
 export declare namespace THREEx {

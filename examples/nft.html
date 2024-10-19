@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-
+<!--<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">-->
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=1">
+<link rel="stylesheet" href="css/nft-style.css">
 <!-- three.js library -->
 <script src='js/three.min.js'></script>
 
@@ -68,11 +69,28 @@
 
         var mixers = [];
 
+        function getWindowSize(vw, vh) {
+            var pscale = 320 / Math.max(vw, (vh / 3) * 4);
+            var sscale = 1;
+
+            let sw = vw * sscale;
+            let sh = vh * sscale;
+
+            let w = vw * pscale;
+            let h = vh * pscale;
+            let pw = Math.max(w, (h / 3) * 4);
+            let ph = Math.max(h, (w / 4) * 3);
+            return [sw, sh, pw, ph, w, h];
+        }
+
+        let videoSize = getWindowSize(640, 480)
+
         renderer.setPixelRatio(window.devicePixelRatio);
 
         renderer.setClearColor(new THREE.Color('lightgrey'), 0)
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        renderer.domElement.style.position = 'absolute'
+        console.log(videoSize)
+        renderer.setSize( videoSize[0], videoSize[1] );
+        //renderer.domElement.style.position = 'absolute'
         renderer.domElement.style.top = '0px'
         renderer.domElement.style.left = '0px'
         document.body.appendChild( renderer.domElement );
@@ -97,8 +115,10 @@
 
         var arToolkitSource = new THREEx.ArToolkitSource({
             sourceType : 'webcam',
-            sourceWidth: 480,
-            sourceHeight: 640,
+            //sourceWidth: 480,
+            sourceWidth: 640,
+            //sourceHeight: 640,
+            sourceHeight: 480,
         })
 
         arToolkitSource.init(function onReady(){
@@ -134,11 +154,15 @@
         var arToolkitContext = new THREEx.ArToolkitContext({
             detectionMode: 'mono',
             cameraParametersUrl: THREEx.ArToolkitContext.baseURL + '../data/data/camera_para.dat',
-            canvasWidth: 480,
-            canvasHeight: 640,
+            //canvasWidth: 480,
+            canvasWidth: 640,
+            //canvasHeight: 640,
+            canvasHeight: 480,
         }, {
-            sourceWidth: 480,
-            sourceHeight: 640,
+            //sourceWidth: 480,
+            sourceWidth: 640,
+            //sourceHeight: 640,
+            sourceHeight: 480,
         })
 
         // initialize it
@@ -174,6 +198,7 @@
             side: THREE.DoubleSide
         })
         var cube = new THREE.Mesh(geometry, material);
+        cube.position.y = 90;
         cube.scale.set(180, 180, 180);
         root.matrixAutoUpdate = false;
         root.add(cube);
@@ -181,7 +206,7 @@
         window.addEventListener('arjs-nft-init-data', function(nft) {
             console.log(nft);
             var msg = nft.detail;
-            cube.position.y = (msg.height / msg.dpi * 2.54 * 10)/2.0; //y axis?
+            cube.position.z = -(msg.height / msg.dpi * 2.54 * 10)/2.0; //y axis?
             cube.position.x = (msg.width / msg.dpi * 2.54 * 10)/2.0; //x axis?
         })
 
