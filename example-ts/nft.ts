@@ -97,7 +97,7 @@ console.log('context done!')
 // init controls for camera
 var markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
     type : 'nft',
-    descriptorsUrl : '' + 'AR.js-threejs/example-ts/data/dataNFT/pinball',
+    descriptorsUrl : '' + './example-ts/data/dataNFT/pinball',
     changeMatrixMode: 'cameraTransformMatrix'
 })
 

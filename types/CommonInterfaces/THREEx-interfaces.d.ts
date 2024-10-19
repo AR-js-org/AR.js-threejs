@@ -73,8 +73,8 @@ export interface IContextParameters {
     canvasWidth?: number;
     canvasHeight?: number;
     debug?: boolean;
-    cameraParametersUrl: string;
-    detectionMode: string;
+    cameraParametersUrl?: string;
+    detectionMode?: string;
     maxDetectionRate?: number;
     matrixCodeType?: string;
     patternRatio?: number;
