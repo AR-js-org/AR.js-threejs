@@ -13,10 +13,6 @@ export interface IArSmoothedControls {
     parameters: ISmoothedControlsParameters;
     update(targetObject3d: any): void;
 }
-export interface IArSmoothedControls {
-    parameters: ISmoothedControlsParameters;
-    update(targetObject3d: any): void;
-}
 export interface IArToolkitContext {
     parameters: IContextParameters;
     arController: any;
@@ -77,8 +73,8 @@ export interface IContextParameters {
     canvasWidth?: number;
     canvasHeight?: number;
     debug?: boolean;
-    cameraParametersUrl: string;
-    detectionMode: string;
+    cameraParametersUrl?: string;
+    detectionMode?: string;
     maxDetectionRate?: number;
     matrixCodeType?: string;
     patternRatio?: number;

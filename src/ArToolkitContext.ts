@@ -40,7 +40,7 @@ export class ArToolkitContext implements IArToolkitContext {
             matrixCodeType: '3x3',
 
             // url of the camera parameters
-            cameraParametersUrl: ArToolkitContext.baseURL + '../data/camera_para.dat',
+            cameraParametersUrl: ArToolkitContext.baseURL + '../../data/data/camera_para.dat',
 
             // tune the maximum rate of pose detection in the source image
             maxDetectionRate: 60,
@@ -114,7 +114,7 @@ export class ArToolkitContext implements IArToolkitContext {
     removeEventListener = EventDispatcher.prototype.removeEventListener;
 
     static baseURL = "https://ar-js-org.github.io/AR.js/three.js/";
-    static REVISION = "3.4.3-threejs-0.2.0";
+    static REVISION = "3.4.3-threejs-0.3.1";
 
     /**
      * Create a default Camera 

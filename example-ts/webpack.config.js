@@ -20,12 +20,39 @@ module.exports = (env, argv) => {
     return [
 
         {
-            name: "example",
+            name: "example-basic",
             devtool,
-            entry: './index.ts',
+            entry: './basic.ts',
             output: {
                 path: path.resolve(__dirname, './dist'),
-                filename: 'bundle.js',
+                filename: 'basic.js',
+                libraryTarget: 'umd',
+                globalObject: 'this'
+            },
+            resolve: {
+                /*alias: {
+                    jsartoolkit: '@ar-js-org/artoolkit5-js',
+                    //threexArmarkercontrols$: path.resolve(__dirname, 'three.js/src/threex/arjs-markercontrols.js')
+                },*/
+                extensions: [".tsx", ".ts", ".js"],
+            },
+            module,
+            externals: {
+                three: {
+                    commonjs: 'three',
+                    commonjs2: 'three',
+                    amd: 'three',
+                    root: 'THREE' // indicates global variable
+                }
+            }
+        },
+        {
+            name: "example-nft",
+            devtool,
+            entry: './nft.ts',
+            output: {
+                path: path.resolve(__dirname, './dist'),
+                filename: 'nft.js',
                 libraryTarget: 'umd',
                 globalObject: 'this'
             },

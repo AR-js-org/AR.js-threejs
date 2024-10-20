@@ -1,8 +1,8 @@
 {
   "name": "example-ts",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "description": "simple ar.js-threejs typescript example",
-  "main": "index.ts",
+  "main": "basic.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-ts": "webpack --mode development --progress --watch",
@@ -15,7 +15,7 @@
     "@types/three": "^0.150.1",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.3",
-    "webpack": "^5.91.0",
+    "webpack": "5.94.0",
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
