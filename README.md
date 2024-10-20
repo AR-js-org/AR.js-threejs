@@ -31,7 +31,8 @@ The project is under development, so things could not works as expected. If you 
 - [x] Utils
 
 ## Examples
-For now, you can find some vanilla JS examples in the **examples** folder and another one in Typescript in the **example-ts** folder. More examples will be added in a near future.
+For now, you can find some vanilla JS examples in the **examples** folder and anothers in Typescript in the **example-ts** folder. More examples will be added in a near future.
+Update 20/10/2024: Now also NFT examples.
 
 ## Test it with Typescript
 
@@ -58,5 +59,4 @@ After, you need a bundler (webpack, rollup..) to build the final app. look at _e
 
 ## Feature to add
 
-- [ ] NFT example
 - [ ] markers-area with multimarker support?
