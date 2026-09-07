@@ -1,4 +1,4 @@
-import { Renderer, Camera, Matrix4, Object3D, EventListener, EventDispatcher } from "three";
+import { WebGLRenderer, Camera, Matrix4, Object3D, EventListener, EventDispatcher } from "three";
 export interface IArBaseControls {
     update(object3d: Object3D): void;
     name(): string;
@@ -58,7 +58,7 @@ export interface IArToolkitSource {
     onResizeElement(): void;
     copyElementSizeTo(otherElement: any): void;
     copySizeTo(): void;
-    onResize(arToolkitContext: IArToolkitContext, renderer: Renderer, camera: Camera): void;
+    onResize(arToolkitContext: IArToolkitContext, renderer: WebGLRenderer, camera: Camera): void;
 }
 
 export interface IArMarkerControlsParameters {

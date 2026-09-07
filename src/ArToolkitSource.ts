@@ -1,6 +1,6 @@
 import { IArToolkitSource, IArToolkitContext, ISourceParameters, IUserMediaConstraints } from "./CommonInterfaces/THREEx-interfaces";
 import { setParameters } from "./common-functions/utilityFunctions";
-import { Renderer, Camera } from 'three'
+import { WebGLRenderer, Camera } from 'three'
 
 declare global {
   var arToolkitSource: IArToolkitSource;
@@ -210,7 +210,7 @@ export class ArToolkitSource implements IArToolkitSource {
   /**
    * Depreacted function use onResizeElement instead.
    */
-  onResize(arToolkitContext: IArToolkitContext, renderer: Renderer, camera: Camera) {
+  onResize(arToolkitContext: IArToolkitContext, renderer: WebGLRenderer, camera: Camera) {
     if (arguments.length !== 3) {
       console.warn(
         "obsolete function arToolkitSource.onResize. Use arToolkitSource.onResizeElement"

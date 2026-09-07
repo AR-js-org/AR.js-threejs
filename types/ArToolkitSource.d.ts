@@ -1,5 +1,5 @@
 import { IArToolkitSource, IArToolkitContext, ISourceParameters } from "./CommonInterfaces/THREEx-interfaces";
-import { Renderer, Camera } from 'three';
+import { WebGLRenderer, Camera } from 'three';
 declare global {
     var arToolkitSource: IArToolkitSource;
 }
@@ -15,7 +15,7 @@ export declare class ArToolkitSource implements IArToolkitSource {
     onResizeElement(): void;
     copyElementSizeTo(otherElement: any): void;
     copySizeTo(): void;
-    onResize(arToolkitContext: IArToolkitContext, renderer: Renderer, camera: Camera): void;
+    onResize(arToolkitContext: IArToolkitContext, renderer: WebGLRenderer, camera: Camera): void;
     private onInitialClick;
     private _initSourceImage;
     private _initSourceVideo;
