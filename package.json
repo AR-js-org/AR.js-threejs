@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kalwalt/AR.js-threex.git"
+    "url": "git+https://github.com/AR-js-org/AR.js-threejs.git"
   },
   "keywords": [
     "AR.js",
@@ -23,20 +23,20 @@
   "author": "Walter Perdan",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kalwalt/AR.js-threex/issues"
+    "url": "https://github.com/AR-js-org/AR.js-threejs/issues"
   },
-  "homepage": "https://github.com/kalwalt/AR.js-threex#readme",
+  "homepage": "https://github.com/AR-js-org/AR.js-threejs#readme",
   "devDependencies": {
-    "@types/node": "^18.15.11",
-    "@types/three": "^0.164.0",
-    "ts-loader": "^9.5.2",
-    "typescript": "^5.4.3",
-    "webpack": "^5.97.1",
-    "webpack-cli": "^6.0.1",
+    "@types/node": "^24.13.3",
+    "@types/three": "^0.185.4",
+    "ts-loader": "^9.6.2",
+    "typescript": "~5.5.0",
+    "webpack": "5.110.3",
+    "webpack-cli": "^7.2.3",
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
-    "@ar-js-org/artoolkit5-js": "^0.3.1",
-    "three": "^0.164.0"
+    "@ar-js-org/artoolkit5-js": "^0.3.2",
+    "three": "^0.185.1"
   }
 }

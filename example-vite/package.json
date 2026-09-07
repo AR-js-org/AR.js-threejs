@@ -8,10 +8,10 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^6.0.5"
+    "vite": "8.0.16"
   },
   "dependencies": {
     "@ar-js-org/ar.js-threejs": "../",
-    "three": "^0.164.0"
+    "three": "^0.185.1"
   }
 }

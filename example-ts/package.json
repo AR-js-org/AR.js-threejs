@@ -12,14 +12,14 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.15.11",
-    "@types/three": "^0.164.0",
-    "ts-loader": "^9.5.2",
-    "typescript": "^5.4.3",
+    "@types/three": "^0.185.4",
+    "ts-loader": "^9.6.2",
+    "typescript": "~5.5.0",
     "webpack": "5.97.1",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
     "@ar-js-org/ar.js-threejs": "../",
-    "three": "^0.164.0"
+    "three": "^0.185.1"
   }
 }
