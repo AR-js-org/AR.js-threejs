@@ -114,7 +114,7 @@ export class ArToolkitContext implements IArToolkitContext {
     removeEventListener = EventDispatcher.prototype.removeEventListener;
 
     static baseURL = "https://ar-js-org.github.io/AR.js/three.js/";
-    static REVISION = "3.4.3-threejs-0.3.2";
+    static REVISION = "3.4.3-threejs-0.3.3";
 
     /**
      * Create a default Camera 
